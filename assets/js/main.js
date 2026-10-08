@@ -58,7 +58,7 @@
       cut: 'Integridade estrutural complexa → desabamento simples por coluna.' },
     { id: 'F2', n: 'Fundação multiplayer', s: 12, w: 8, c: '#5fb3a3',
       goal: 'Servidor dedicado autoritativo com 16 jogadores e mundo destrutível sincronizado.',
-      out: ['Servidor headless', 'Predição + reconciliação', 'Deltas de chunk', 'Lobby por IP', 'Teste de carga com bots'],
+      out: ['Servidor dedicado headless (roda sem jogador)', 'Predição + reconciliação', 'Deltas de chunk', 'Lobby por IP', 'Teste de carga com bots'],
       cut: 'Integração Steam → fica para a F4.' },
     { id: 'F3', n: 'Vertical slice', s: 20, w: 12, c: '#e0723a',
       goal: 'Uma fatia “como no jogo final”: 1 mapa 2×2 km, 2 facções, Linha de Frente.',
@@ -74,7 +74,7 @@
       cut: 'Clima sazonal → só lama no Beta.' },
     { id: 'F6', n: 'Polimento → Early Access', s: 56, w: 17, c: '#3d6fd6',
       goal: 'Performance, onboarding e lançamento em Acesso Antecipado na Steam.',
-      out: ['Tutorial jogável', 'Otimização (LOD de chunks, pooling)', 'Servidores alugados + comunitários', 'Trailer de lançamento', 'Lançamento EA'],
+      out: ['Tutorial jogável', 'Otimização (LOD de chunks, pooling)', 'Servidores dedicados: SteamCMD, Docker e lista na Steam', 'Trailer de lançamento', 'Lançamento EA'],
       cut: 'Campanha Dinâmica e túneis → pós-lançamento.' },
   ];
 
@@ -211,7 +211,9 @@ Aceite: cena sandbox onde dá para cavar 10 m de trincheira e cobrir com sacos.`
 Aceite: cena sandbox com tanque-alvo e um jammer; OSD com bateria, altitude, velocidade e RSSI.` },
     { n: '05 · Multiplayer autoritativo', d: 'Fase F2.',
       p: `Estruture o multiplayer:
-- Servidor dedicado headless (export preset "Server") com ENetMultiplayerPeer.
+- Servidor dedicado headless (export em modo dedicated server, rodando com --headless) com ENetMultiplayerPeer. Ele roda sozinho, sem nenhum jogador conectado e sem a janela do jogo.
+- O servidor não gera malhas nem carrega texturas: só os dados dos blocos e a colisão.
+- Configuração em server.cfg (nome, senha, rotação de mapas, máximo de jogadores, admins), reinício automático e um Dockerfile para rodar numa VPS.
 - Tick do servidor a 30 Hz; clientes mandam inputs numerados; predição + reconciliação no jogador local; interpolação de 100 ms para os outros.
 - Blocos: o servidor valida e transmite deltas por chunk (comprimidos); quem entra recebe um snapshot dos chunks modificados.
 - Lobby simples por IP (depois trocamos por Steam via GodotSteam).

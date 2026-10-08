@@ -139,7 +139,7 @@
       <ul class="stack">
         <li><b>Engine</b> Godot 4.x · GDScript tipado · GDExtension (C++)</li>
         <li><b>Voxel</b> chunks 16³, greedy meshing, atlas 16×16 (base: Voxel Tools ou próprio)</li>
-        <li><b>Rede</b> ENet · servidor autoritativo 30 Hz · GodotSteam (lobby e P2P)</li>
+        <li><b>Rede</b> ENet · servidor dedicado autoritativo a 30 Hz, que roda sozinho, sem ninguém jogando · GodotSteam: lista de servidores e convites (P2P só como extra para partidas entre amigos)</li>
         <li><b>Voz</b> AudioEffectCapture + Opus (proximidade e rádio)</li>
         <li><b>Modelos</b> voxel como código (IA) → <code>.vox</code> + <code>.glb</code></li>
         <li><b>Cores</b> paleta fixa de 256 cores (nada de textura para pintar)</li>
@@ -154,11 +154,15 @@
       <div class="arch">
         <div class="node"><b>Cliente</b><span>input → predição</span><span>render voxel</span><span>UI · áudio · voz</span></div>
         <div class="wire"><span>inputs 30 Hz →</span><span>← snapshots + deltas de chunk</span></div>
-        <div class="node srv"><b>Servidor dedicado</b><span>simulação autoritativa</span><span>mundo voxel oficial</span><span>bots · regras · anti-cheat</span></div>
+        <div class="node srv"><b>Servidor dedicado</b><span>roda sem gráficos e sem jogador</span><span>simulação autoritativa</span><span>mundo voxel oficial</span><span>bots · regras · anti-cheat</span></div>
         <div class="wire"><span>↕</span></div>
-        <div class="node ext"><b>Serviços</b><span>Steam: lobby, amigos, workshop</span><span>backend leve: stats e bans</span></div>
+        <div class="node ext"><b>Serviços</b><span>Steam: lista de servidores, amigos, workshop</span><span>backend leve: stats e bans</span></div>
       </div>
     </div>
+  </div>
+
+  <div class="note">
+    <b>Servidor dedicado, sem precisar jogar:</b> o servidor é um programa separado, sem gráficos (<code>--headless</code>), que fica ligado 24 h num PC, VPS ou empresa de hospedagem, com ou sem você online. Configuração num arquivo (nome, senha, rotação de mapas, máximo de jogadores, admins), administração remota, reinício automático, imagem Docker e um pacote gratuito no SteamCMD para a comunidade montar os próprios servidores, que aparecem na lista do jogo. No servidor não existe malha nem textura, só os dados dos blocos e a colisão: isso deixa ele leve. Hospedar jogando ao mesmo tempo (P2P entre amigos) é só uma opção a mais.
   </div>
 
   <div class="note">
