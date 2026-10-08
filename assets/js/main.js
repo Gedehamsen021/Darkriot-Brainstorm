@@ -18,9 +18,9 @@
     { n: 'Caçada de Drones', tag: 'Alpha', p: '8 × 8', d: '15 min', m: 'Vila',
       t: 'Arena pequena e rápida: operadores de FPV contra caçadores com jammers, espingardas e redes. Ótimo modo de entrada para aprender a pilotar.' },
     { n: 'Patrulha (Co-op PvE)', tag: 'Beta', p: '1–8', d: '20–40 min', m: 'Setor',
-      t: 'Missões contra IA: limpar trincheira, escoltar comboio, resgatar ferido. Serve de tutorial, de modo solo e de banco de testes para os bots.' },
+      t: 'Missões contra IA: limpar trincheira, escoltar comboio, resgatar ferido. Serve de tutorial, de treino e de banco de testes para os bots, nos servidores oficiais como todo o resto.' },
     { n: 'Campanha Dinâmica', tag: 'Pós', p: 'Servidor', d: 'Semanas', m: 'Oblast inteiro',
-      t: 'Guerra persistente em servidores da comunidade: um mapa estratégico de hexágonos, logística entre partidas, a destruição de uma batalha continua na próxima. A meta de longo prazo do DARKRIOT.' },
+      t: 'Guerra persistente nos servidores oficiais: um mapa estratégico de hexágonos, logística entre partidas, a destruição de uma batalha continua na próxima. A meta de longo prazo do DARKRIOT.' },
   ];
 
   const MECHS = [
@@ -40,7 +40,7 @@
     { n: 'Veículos civis e reboque', tag: 'Beta', t: 'Carros, vans, ônibus e tratores ficam espalhados pelas cidades e vilas, e qualquer facção pode pegar. O trator reboca veículos abandonados até a base, e eles passam para o seu lado.', f: 'Roubar um blindado inimigo com um trator vira lenda no Discord.' },
     { n: 'Visão térmica e noite', tag: 'Beta', t: 'Drones térmicos e miras térmicas mostram calor (corpos, motores, canos quentes). Contra: mantas anti-térmicas, fumaça, ficar parado em ruínas frias.', f: 'Gato e rato com assinatura de calor.' },
     { n: 'Túneis e subsolo', tag: 'Pós', t: 'Cavar túneis sob a linha inimiga e combater dentro da mina de sal, com escoras de madeira (sem escora, o túnel desaba).', f: 'O DNA de Minecraft no ponto mais tático: a guerra também acontece embaixo da terra.' },
-    { n: 'Editor e mods', tag: 'Pós', t: 'Editor de cenários usando o próprio motor voxel; mods em .pck do Godot; workshop da Steam.', f: 'A comunidade estende o jogo por anos.' },
+    { n: 'Editor e conteúdo da comunidade', tag: 'Pós', t: 'Editor de cenários usando o próprio motor voxel. Como só existem servidores oficiais, mapas e cenários da comunidade entram no jogo depois de aprovados pela equipe.', f: 'A comunidade estende o jogo por anos sem dividir os jogadores em servidores diferentes.' },
   ];
 
   const VEHICLES = window.DR_VEHICLES || [];
@@ -58,7 +58,7 @@
       cut: 'Integridade estrutural complexa → desabamento simples por coluna.' },
     { id: 'F2', n: 'Fundação multiplayer', s: 12, w: 8, c: '#5fb3a3',
       goal: 'Servidor dedicado autoritativo com 16 jogadores e mundo destrutível sincronizado.',
-      out: ['Servidor dedicado headless (roda sem jogador)', 'Predição + reconciliação', 'Deltas de chunk', 'Lobby por IP', 'Teste de carga com bots'],
+      out: ['Servidor dedicado headless (roda sem jogador)', 'Predição + reconciliação', 'Deltas de chunk', 'Conexão por IP (só testes internos)', 'Teste de carga com bots'],
       cut: 'Integração Steam → fica para a F4.' },
     { id: 'F3', n: 'Vertical slice', s: 20, w: 12, c: '#e0723a',
       goal: 'Uma fatia “como no jogo final”: 1 mapa 2×2 km, 2 facções, Linha de Frente.',
@@ -74,7 +74,7 @@
       cut: 'Clima sazonal → só lama no Beta.' },
     { id: 'F6', n: 'Polimento → Early Access', s: 56, w: 17, c: '#3d6fd6',
       goal: 'Performance, onboarding e lançamento em Acesso Antecipado na Steam.',
-      out: ['Tutorial jogável', 'Otimização (LOD de chunks, pooling)', 'Servidores dedicados: SteamCMD, Docker e lista na Steam', 'Trailer de lançamento', 'Lançamento EA'],
+      out: ['Tutorial jogável', 'Otimização (LOD de chunks, pooling)', 'Servidores oficiais por região + matchmaking', 'Trailer de lançamento', 'Lançamento EA'],
       cut: 'Campanha Dinâmica e túneis → pós-lançamento.' },
   ];
 
@@ -83,7 +83,7 @@
     { n: 'Modelos voxel (IA)', who: 'ia', bars: [[0, 4, 'Fábrica + blocos + soldado'], [4, 12, 'Armas, uniformes, props'], [12, 22, 'Veículos I'], [22, 34, 'Mapa: vila + cidade'], [34, 46, 'Veículos II + drones'], [46, 60, 'Helicópteros + civis'], [60, 73, 'Aviões + LODs']] },
     { n: 'Direção de arte', who: 'voce', bars: [[0, 4, 'Estilo + paleta'], [4, 56, 'Aprovar as prévias toda semana'], [56, 73, 'Polimento visual']] },
     { n: 'Game design', who: 'voce', bars: [[0, 6, 'GDD + regras'], [6, 32, 'Kits, armas, economia'], [32, 73, 'Balanceamento por dados']] },
-    { n: 'Rede & servidores', who: 'ia', bars: [[12, 20, 'Fundação'], [32, 44, 'Escala 64p'], [56, 73, 'Hospedagem + anti-cheat']] },
+    { n: 'Rede & servidores', who: 'ia', bars: [[12, 20, 'Fundação'], [32, 44, 'Escala 64p'], [56, 73, 'Servidores oficiais + anti-cheat']] },
     { n: 'Áudio', who: 'voce', bars: [[16, 32, 'SFX base'], [32, 56, 'Ambiente + rádio'], [56, 73, 'Mix final + música']] },
     { n: 'Comunidade', who: 'voce', bars: [[8, 40, 'Devlogs + Discord'], [40, 56, 'Página Steam + wishlists'], [56, 73, 'Trailer + imprensa']] },
     { n: 'Playtests', who: 'voce', bars: [[12, 32, 'Internos'], [32, 44, 'Alpha fechado'], [48, 56, 'Beta / Next Fest'], [56, 73, 'Testes de carga']] },
@@ -213,10 +213,11 @@ Aceite: cena sandbox com tanque-alvo e um jammer; OSD com bateria, altitude, vel
       p: `Estruture o multiplayer:
 - Servidor dedicado headless (export em modo dedicated server, rodando com --headless) com ENetMultiplayerPeer. Ele roda sozinho, sem nenhum jogador conectado e sem a janela do jogo.
 - O servidor não gera malhas nem carrega texturas: só os dados dos blocos e a colisão.
-- Configuração em server.cfg (nome, senha, rotação de mapas, máximo de jogadores, admins), reinício automático e um Dockerfile para rodar numa VPS.
+- Configuração em server.cfg (nome, rotação de mapas, máximo de jogadores, admins), reinício automático e um Dockerfile para rodar em máquinas alugadas.
+- Só servidores oficiais: jogador nunca hospeda (sem P2P, sem servidor dentro do cliente).
 - Tick do servidor a 30 Hz; clientes mandam inputs numerados; predição + reconciliação no jogador local; interpolação de 100 ms para os outros.
 - Blocos: o servidor valida e transmite deltas por chunk (comprimidos); quem entra recebe um snapshot dos chunks modificados.
-- Lobby simples por IP (depois trocamos por Steam via GodotSteam).
+- Conexão por IP só para testes internos; no lançamento entram o matchmaking e a lista dos servidores oficiais.
 Aceite: 2 clientes + servidor locais; cavar num cliente aparece no outro; script tools/run_local_match.sh.
 Explique os trade-offs antes de implementar.` },
     { n: '06 · Fábrica de modelos voxel', d: 'Semana 1. Daqui em diante a IA gera qualquer veículo, prop ou personagem a partir de código.',
@@ -248,9 +249,10 @@ Liste por ordem de gravidade com arquivo:linha e proponha a correção. Não alt
     ['Nomes das facções', '“Coalizão Kalyna” × “Legião Boreal”, num país fictício. Mantém o DNA UC × RU sem usar bandeiras e unidades reais.', 'Fictícios'],
     ['Câmera', 'Só 1ª pessoa a pé (milsim). 3ª pessoa opcional dentro de veículos.', '1ª pessoa'],
     ['Tamanho da partida', '32×32 no Early Access; 50×50 quando a rede aguentar.', '32×32'],
-    ['Modelo de negócio', 'Premium (≈ US$ 19,99 no EA) + cosméticos que não dão vantagem. Nada de pay-to-win.', 'Premium'],
+    ['Modelo de negócio', 'Premium (≈ US$ 19,99 no EA) + cosméticos que não dão vantagem. Nada de pay-to-win. Vendas e cosméticos pagam os servidores oficiais.', 'Premium'],
     ['Respawn', 'Em FOBs e pontos de reagrupamento abastecidos. Modo hardcore com vida única por rodada.', 'FOB / rally'],
-    ['Mods', 'Abrir para mods desde o EA (Godot carrega .pck com facilidade).', 'Sim, no EA'],
+    ['Hospedagem', 'Só servidores dedicados oficiais. Jogador não hospeda: sem P2P, sem servidor dentro do jogo e sem pacote de servidor público.', 'Só oficiais'],
+    ['Mods', 'Sem mods de servidor, já que só existem servidores oficiais. Depois do lançamento, mapas e cenários da comunidade entram nos oficiais após aprovação.', 'Curadoria'],
   ];
 
   const RISKS = [
@@ -260,6 +262,7 @@ Liste por ordem de gravidade com arquivo:linha e proponha a correção. Não alt
     ['Tema sensível (guerra real)', 'Facções e lugares fictícios, sem crimes de guerra; foco na tática e no soldado comum.'],
     ['Código de IA virar “espaguete”', 'CLAUDE.md, testes obrigatórios, prompt de revisão, PR pequeno, você aprova tudo.'],
     ['Modelos da IA com estilo desigual', 'Guia de estilo e paleta fixos, funções de modelagem compartilhadas e prévia obrigatória para você aprovar antes de entrar no jogo.'],
+    ['Custo dos servidores oficiais', 'Servidores sob demanda (sobem e descem conforme a fila), regiões começando por América do Sul e Europa, teste de carga para saber quantos jogadores cabem por máquina e orçamento mensal antes do EA.'],
     ['Esgotamento (dev solo)', 'Semanas de folga embutidas, devlog curto a cada 2 semanas, comunidade cedo.'],
   ];
 
