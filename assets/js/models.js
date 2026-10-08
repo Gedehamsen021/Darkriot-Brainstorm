@@ -21,13 +21,21 @@
     },
   };
 
-  // Soldado olhando para +x. pose: 'aim' | 'idle' | 'dig' | 'crouch'
-  DR.soldier = function (v, X, Y, Z, f, pose) {
+  // Soldado olhando para +x. pose: 'aim' | 'idle' | 'dig' | 'crouch' | 'ride' (sentado pilotando)
+  // opt.goggles: óculos FPV levantados no capacete.
+  DR.soldier = function (v, X, Y, Z, f, pose, opt) {
     pose = pose || 'aim';
     const U = f.camo, boot = '#25221d';
-    const crouch = pose === 'crouch';
-    const L = crouch ? 3 : 6; // altura das pernas
-    if (crouch) {
+    const crouch = pose === 'crouch', ride = pose === 'ride';
+    const L = crouch ? 3 : ride ? 4 : 6; // altura das pernas
+    if (ride) {
+      // coxas para a frente sobre o banco, canelas para baixo até as pedaleiras
+      v.box(X, Y, Z + 2, 4, 2, 2, U); v.box(X, Y + 2, Z + 2, 4, 2, 2, U);
+      v.box(X + 3, Y, Z - 2, 2, 2, 4, U); v.box(X + 3, Y + 2, Z - 2, 2, 2, 4, U);
+      v.box(X + 3, Y, Z - 3, 3, 2, 1, boot); v.box(X + 3, Y + 2, Z - 3, 3, 2, 1, boot);
+      v.box(X + 4, Y, Z + 2, 1, 2, 1, f.pad); v.box(X + 4, Y + 2, Z + 2, 1, 2, 1, f.pad);
+      v.set(X + 1, Y + 3, Z + 3, f.tape[0]); v.set(X + 2, Y + 3, Z + 3, f.tape[1]);
+    } else if (crouch) {
       v.box(X, Y, Z, 4, 2, 2, U); v.box(X - 1, Y + 2, Z, 2, 2, 3, U);
       v.box(X + 3, Y, Z, 1, 2, 1, boot); v.box(X - 1, Y + 2, Z, 1, 2, 1, boot);
       v.box(X + 3, Y, Z + 2, 1, 2, 1, f.pad);
@@ -53,6 +61,9 @@
       v.box(X + 4, Y, T + 2, 1, 3, 1, f.glove);
       v.box(X + 1, Y + 4, T + 2, 2, 1, 1, U); v.set(X + 3, Y + 4, T + 2, f.glove);
       DR.rifle(v, X + 2, Y + 3, T + 3, f);
+    } else if (ride) {
+      v.box(X + 1, Y - 1, T + 2, 6, 1, 1, U); v.set(X + 7, Y - 1, T + 2, f.glove);
+      v.box(X + 1, Y + 4, T + 2, 6, 1, 1, U); v.set(X + 7, Y + 4, T + 2, f.glove);
     } else if (pose === 'dig') {
       v.box(X + 1, Y - 1, T + 2, 2, 1, 1, U); v.box(X + 1, Y + 4, T + 2, 2, 1, 1, U);
       v.line(X + 3, Y + 1, T + 3, X + 7, Y + 1, T - 3, '#6b4a2b');
@@ -73,6 +84,11 @@
     v.box(X - 1, Y - 1, H + 1, 1, 6, 2, f.helmet);
     v.set(X + 3, Y + 1, H + 4, '#1b1b1b');
     v.box(X - 1, Y, H + 3, 1, 4, 1, f.tape[0]);
+    if (opt && opt.goggles) {
+      v.box(X + 3, Y, H + 3, 1, 4, 1, '#151515');
+      v.set(X + 3, Y + 1, H + 3, '#2a4a8a'); v.set(X + 3, Y + 2, H + 3, '#2a4a8a');
+      v.box(X + 2, Y + 3, H + 4, 1, 1, 2, '#222');
+    }
   };
 
   DR.rifle = function (v, X, Y, Z, f) {

@@ -24,6 +24,7 @@
     <a href="#engine">Engine</a>
     <a href="#faccoes">Facções</a>
     <a href="#arte">Concept art</a>
+    <a href="#veiculos">Veículos</a>
     <a href="#modos">Modos</a>
     <a href="#mecanicas">Mecânicas</a>
     <a href="#gifs">GIFs</a>
@@ -180,7 +181,7 @@
       <h4>Kits</h4>
       <ul class="kits"><li>Fuzileiro</li><li>Líder de esquadrão</li><li>Médico</li><li>Sapador</li><li>Operador FPV</li><li>Antitanque “Ferrão”</li><li>Atirador (DMR)</li><li>Observador</li></ul>
       <h4>Veículos</h4>
-      <ul class="kits"><li>IFV “Lince”</li><li>Pick-up técnica</li><li>Quadriciclo</li><li>Hexacóptero “Bruxa”</li></ul>
+      <ul class="kits"><li><a href="#veh-lince">IFV “Lince”</a></li><li><a href="#veh-coiote">Pick-up “Coiote”</a></li><li><a href="#veh-furao">Quadriciclo “Furão”</a></li><li><a href="#veh-bruxa">Hexacóptero “Bruxa”</a></li><li><a href="#veh-mula">Caminhão “Mula”</a></li></ul>
       <p class="id"><b>Identificação:</b> fita amarela + azul nos braços e pernas · camuflagem de manchas</p>
     </article>
     <article class="faction ru">
@@ -190,7 +191,7 @@
       <h4>Kits</h4>
       <ul class="kits"><li>Fuzileiro de assalto</li><li>Comandante</li><li>Médico</li><li>Sapador (minas)</li><li>Operador EW</li><li>Metralhador</li><li>Antitanque (RPG)</li><li>Artilheiro</li></ul>
       <h4>Veículos</h4>
-      <ul class="kits"><li>Tanque “Urso T-7B”</li><li>BMP “Lobo”</li><li>MT-LB “Tartaruga”</li><li>Obuseiro “Prego”</li></ul>
+      <ul class="kits"><li><a href="#veh-urso">Tanque “Urso T-7B”</a></li><li><a href="#veh-lobo">BMP “Lobo”</a></li><li><a href="#veh-tartaruga">MT-LB “Tartaruga”</a></li><li><a href="#veh-prego">Obuseiro “Prego”</a></li><li><a href="#veh-gafanhoto">Moto “Gafanhoto”</a></li><li><a href="#veh-mula">Caminhão “Mula”</a></li></ul>
       <p class="id"><b>Identificação:</b> fita branca + vermelha · camuflagem digital · balaclava</p>
     </article>
   </div>
@@ -246,10 +247,25 @@
   </div>
 </section>
 
+<!-- ================= VEÍCULOS ================= -->
+<section id="veiculos" class="sec">
+  <div class="sec-head">
+    <p class="sec-num">05 // veículos</p>
+    <h2>Veículos</h2>
+    <p class="sec-sub">Dez veículos: quatro da Coalizão (mobilidade e drones), cinco da Legião (blindagem, artilharia e massa) e o caminhão de logística que as duas usam. Cada silhueta é diferente de propósito, para dar para reconhecer de longe ou pela câmera de um drone. A arte é estilizada (os blindados aparecem compactos); as medidas reais para modelar estão em cada ficha.</p>
+  </div>
+  <div id="veh-filter" class="filter" role="group" aria-label="Filtrar veículos por facção">
+    <button type="button" data-f="all" aria-pressed="true">Todos</button>
+    <button type="button" data-f="uc" aria-pressed="false">Coalizão</button>
+    <button type="button" data-f="ru" aria-pressed="false">Legião</button>
+  </div>
+  <div id="veh-grid" class="veh-grid"></div>
+</section>
+
 <!-- ================= MODOS ================= -->
 <section id="modos" class="sec">
   <div class="sec-head">
-    <p class="sec-num">05 // conceitos de gameplay</p>
+    <p class="sec-num">06 // conceitos de gameplay</p>
     <h2>Modos de jogo</h2>
     <p class="sec-sub">Um modo principal forte no lançamento (Linha de Frente) e modos menores que reaproveitam os mesmos sistemas.</p>
   </div>
@@ -259,7 +275,7 @@
 <!-- ================= MECÂNICAS ================= -->
 <section id="mecanicas" class="sec">
   <div class="sec-head">
-    <p class="sec-num">06 // mecânicas</p>
+    <p class="sec-num">07 // mecânicas</p>
     <h2>Sistemas do jogo</h2>
     <p class="sec-sub">Cada mecânica tem uma fase: <span class="tag tag-mvp">MVP</span> entra no protótipo, <span class="tag tag-alpha">Alpha</span> no alpha fechado, <span class="tag tag-beta">Beta</span> antes do Early Access e <span class="tag tag-pós">Pós</span> depois do lançamento.</p>
   </div>
@@ -276,7 +292,7 @@
 <!-- ================= GIFS ================= -->
 <section id="gifs" class="sec">
   <div class="sec-head">
-    <p class="sec-num">07 // como ficaria</p>
+    <p class="sec-num">08 // como ficaria</p>
     <h2>GIFs de gameplay</h2>
     <p class="sec-sub">Loops gerados a partir do código das animações (<code>assets/js/anims.js</code>), mostrando cada mecânica em ação. Cada um também está disponível como <code>.gif</code> para baixar e mandar no Discord ou usar em devlog.</p>
   </div>
@@ -299,7 +315,7 @@
 <!-- ================= CRONOGRAMA ================= -->
 <section id="cronograma" class="sec">
   <div class="sec-head">
-    <p class="sec-num">08 // cronograma</p>
+    <p class="sec-num">09 // cronograma</p>
     <h2>Do zero ao Early Access</h2>
     <p class="sec-sub">≈ 17 meses, começando na segunda-feira <b>12/10/2026</b>. Considera ~20–25 h por semana suas (orquestrar a IA, testar e modelar). Com menos tempo, estique as fases proporcionalmente — a ordem continua valendo.</p>
   </div>
@@ -323,7 +339,7 @@
 <!-- ================= ORQUESTRAÇÃO ================= -->
 <section id="orquestracao" class="sec">
   <div class="sec-head">
-    <p class="sec-num">09 // orquestração</p>
+    <p class="sec-num">10 // orquestração</p>
     <h2>Você no comando</h2>
     <p class="sec-sub">Você é o diretor: decide, escreve os prompts, revisa e cria os modelos. A IA escreve o código. O fluxo abaixo mantém a qualidade alta mesmo com muito código gerado.</p>
   </div>

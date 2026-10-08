@@ -1,6 +1,6 @@
 // Renderiza as concept arts, o hero, o mapa e os quadros das animações em PNG (tools/render/out/).
 // Depois rode encode.py para gerar os .webp e .gif usados pelo site.
-// Uso: node tools/render/export.js [arts|map|anims ...]   (requer: npm i playwright)
+// Uso: node tools/render/export.js [arts|vehicles|map|anims ...]   (requer: npm i playwright)
 // FONT_CSS=caminho/fonte.css injeta uma @font-face local (útil sem internet).
 const path = require('path');
 const fs = require('fs');
@@ -9,6 +9,7 @@ const { chromium } = require('playwright');
 const OUT = path.join(__dirname, 'out');
 const FPS = 12.5;
 const ARTS = ['coalizao', 'legiao', 'tank', 'trench', 'village', 'fpv'];
+const VEHICLES = ['lince', 'coiote', 'furao', 'bruxa', 'urso', 'lobo', 'tartaruga', 'prego', 'gafanhoto', 'mula'];
 const save = (name, dataUrl) => {
   fs.mkdirSync(path.dirname(path.join(OUT, name)), { recursive: true });
   fs.writeFileSync(path.join(OUT, name), Buffer.from(dataUrl.split(',')[1], 'base64'));
@@ -33,6 +34,11 @@ async function open(browser, scale) {
     for (const id of ARTS) save(`art-${id}.png`, await page.evaluate(([i]) => exportArt(i, 600, 400), [id]));
     save('hero.png', await page.evaluate(() => exportArt('hero', 900, 760, { pad: 8 })));
     console.log('artes ok');
+  }
+  if (all || want.includes('vehicles')) {
+    const page = await open(browser, 2);
+    for (const id of VEHICLES) save(`veh-${id}.png`, await page.evaluate(([i]) => exportArt('veh-' + i, 600, 400), [id]));
+    console.log('veículos ok');
     await page.close();
   }
   if (all || want.includes('map')) {

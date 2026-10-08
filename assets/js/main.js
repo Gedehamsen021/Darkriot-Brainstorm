@@ -41,6 +41,50 @@
     { n: 'Editor e mods', tag: 'Pós', t: 'Editor de cenários usando o próprio motor voxel; mods em .pck do Godot; workshop da Steam.', f: 'A comunidade estende o jogo por anos.' },
   ];
 
+  // Veículos — size: comprimento × largura × altura reais em metros; ppm: pixels por metro no Blockbench.
+  const VEHICLES = [
+    { id: 'lince', n: 'IFV “Lince”', f: 'uc', cls: 'Blindado de infantaria', phase: 'F3',
+      d: 'O cavalo de batalha da Coalizão: leva um esquadrão inteiro e apoia com canhão automático e mísseis. Torre deslocada, saias laterais e rede de camuflagem enrolada no teto.',
+      crew: '3 + 6', arm: 'Canhão 25 mm, metralhadora coaxial e 2 mísseis “Ferrão”', armor: 'Média (aguenta 14,5 mm de frente)', speed: '60 km/h', cost: 300,
+      weak: 'Teto e motor contra FPV; minas.', size: [6.5, 3.6, 3.4], tex: '256×256', pivots: 'turret, gun, launcher, ramp' },
+    { id: 'coiote', n: 'Pick-up técnica “Coiote”', f: 'uc', cls: 'Veículo leve armado', phase: 'F4',
+      d: 'Rápida e barata: metralhadora pesada com escudo na caçamba e um jammer anti-drone no teto. Chega primeiro, atira e some.',
+      crew: '2 + 3', arm: 'Metralhadora 12,7 mm com escudo', armor: 'Nenhuma (só o escudo da arma)', speed: '110 km/h', cost: 80,
+      weak: 'Qualquer tiro faz estrago; vive de velocidade.', size: [5.3, 1.9, 1.9], tex: '128×128', pivots: 'mg_mount, mg, wheel_*' },
+    { id: 'furao', n: 'Quadriciclo “Furão”', f: 'uc', cls: 'Veículo de equipe de drones', phase: 'F4',
+      d: 'O veículo dos operadores de FPV: caixa com 6 drones no bagageiro, mastro com antena para estender o alcance e lugar para um carona.',
+      crew: '1 + 1', arm: 'Nenhuma (carrega 6 FPVs)', armor: 'Nenhuma', speed: '80 km/h', cost: 40,
+      weak: 'Totalmente exposto; a antena denuncia a posição para a EW.', size: [2.1, 1.2, 1.2], tex: '64×64', pivots: 'handlebar, wheel_*, mast' },
+    { id: 'bruxa', n: 'Hexacóptero “Bruxa”', f: 'uc', cls: 'Drone bombardeiro pesado', phase: 'F4',
+      d: 'Seis motores, câmera térmica e quatro granadas de morteiro. Ataca à noite e é ouvida antes de ser vista: o zumbido grave é a assinatura sonora dela.',
+      crew: '1 operador', arm: '4 granadas de morteiro 82 mm ou 1 mina anti-tanque', armor: 'Nenhuma', speed: '60 km/h · 30 min · 10 km', cost: 150,
+      weak: 'Barulhenta (ouvida a 300 m); EW, espingarda e redes.', size: [1.6, 1.6, 0.6], ppm: 32, tex: '64×64', pivots: 'prop_1…6, bomb_1…4, gimbal' },
+    { id: 'urso', n: 'Tanque “Urso T-7B”', f: 'ru', cls: 'Tanque principal', phase: 'F3',
+      d: 'Ruptura de linha: blindagem reativa, gaiola anti-drone e canhão de 125 mm. Aqui na variante de inverno, com pintura branca lavável e neve acumulada.',
+      crew: '3', arm: 'Canhão 125 mm, coaxial 7,62 e metralhadora 12,7 no teto', armor: 'Pesada + reativa + gaiola', speed: '60 km/h na estrada · 35 no campo', cost: 600,
+      weak: 'Teto e traseira; minas; atola na lama.', size: [9.5, 3.6, 2.2], tex: '256×256', pivots: 'turret, gun, cage (peça separada)' },
+    { id: 'lobo', n: 'BMP “Lobo”', f: 'ru', cls: 'Blindado de infantaria', phase: 'F4',
+      d: 'Baixo e com nariz em cunha: leva 7 soldados, tem canhão automático de 30 mm e um míssil sobre a torre. Rápido, anfíbio e frágil.',
+      crew: '3 + 7', arm: 'Canhão 30 mm, míssil anti-tanque e coaxial', armor: 'Leve (só 12,7 mm de frente)', speed: '65 km/h · anfíbio', cost: 250,
+      weak: 'Blindagem fina: um FPV no lugar certo resolve.', size: [6.7, 3.2, 2.1], tex: '256×256', pivots: 'turret, gun, atgm, door_l, door_r' },
+    { id: 'tartaruga', n: 'MT-LB “Tartaruga”', f: 'ru', cls: 'Transporte com casco anti-drone', phase: 'F5',
+      d: 'A resposta da Legião ao enxame: um transporte coberto por um casco de chapas soldadas. Aguenta vários FPVs, mas o motorista quase não enxerga e cada impacto arranca uma chapa.',
+      crew: '2 + 10', arm: 'Metralhadora 7,62 pela fresta da frente', armor: 'Leve + casco (absorve 3–4 FPVs)', speed: '35 km/h com o casco', cost: 220,
+      weak: 'Lento e meio cego; minas; o casco cai aos pedaços.', size: [6.5, 2.9, 3.2], tex: '256×256', pivots: 'shell_01…12 (chapas destrutíveis)' },
+    { id: 'prego', n: 'Obuseiro “Prego”', f: 'ru', cls: 'Artilharia autopropulsada', phase: 'F4',
+      d: 'Obuseiro de 122 mm sobre lagartas: dispara nas coordenadas que o observador manda e troca de posição antes da contra-bateria chegar.',
+      crew: '4', arm: 'Obuseiro 122 mm (alcance 15 km)', armor: 'Leve', speed: '60 km/h · anfíbio', cost: 450,
+      weak: 'Contra-bateria e drones de observação.', size: [7.3, 2.9, 2.7], tex: '256×256', pivots: 'turret, gun (elevação 0–70°), spade' },
+    { id: 'gafanhoto', n: 'Moto “Gafanhoto”', f: 'ru', cls: 'Assalto rápido', phase: 'F5',
+      d: 'Duplas de moto cruzam a terra de ninguém rápido demais para os drones mirarem. Barata, barulhenta e sem proteção nenhuma.',
+      crew: '1 + 1', arm: 'As dos próprios soldados', armor: 'Nenhuma', speed: '120 km/h', cost: 30,
+      weak: 'Tudo; depende de velocidade e surpresa.', size: [2.1, 0.8, 1.2], tex: '64×64', pivots: 'fork, wheel_f, wheel_r' },
+    { id: 'mula', n: 'Caminhão “Mula”', f: 'both', cls: 'Logística 6×6', phase: 'F5',
+      d: 'Sem ele não há guerra: leva suprimentos do QG às FOBs e pode montar uma FOB nova. As duas facções usam, cada uma com as próprias fitas.',
+      crew: '1 + 12 (ou carga)', arm: 'Nenhuma', armor: 'Nenhuma', speed: '85 km/h · leva 1.000 suprimentos', cost: 150,
+      weak: 'Alvo prioritário de drones; depende de pontes e estradas.', size: [7.4, 2.5, 2.9], tex: '256×256', pivots: 'wheel_*, tarp_side (enrola)' },
+  ];
+
   // Cronograma — semana 0 = segunda, 12/10/2026
   const W0 = new Date(2026, 9, 12);
   const PHASES = [
@@ -130,13 +174,13 @@
       ['wpn_support', 'Metralhadora, DMR, pistola, espingarda anti-drone', ''],
       ['veh_tank_urso', 'Tanque “Urso T-7B” + gaiola anti-drone (peça separada)', 'textura 256×256 · pivôs turret/gun'],
       ['veh_ifv_lince', 'IFV “Lince” (Coalizão)', 'rodas/esteiras nomeadas'],
-      ['veh_truck', 'Caminhão de suprimentos + pick-up técnica', ''],
+      ['veh_truck', 'Caminhão “Mula” + pick-up técnica “Coiote”', 'rodas nomeadas wheel_*'],
       ['drn_recon', 'Drone de observação + jammer portátil + antena EW', ''],
       ['bld_city', 'Prédio soviético modular de 5 andares + ruínas', 'módulos 4×4 blocos'],
-      ['art_howitzer', 'Obuseiro e morteiro', 'animação de recuo'],
+      ['art_howitzer', 'Obuseiro “Prego” e morteiro', 'animação de recuo'],
     ] },
     { g: 'F4–F6 — Alpha → EA', items: [
-      ['veh_bmp_lobo', 'BMP “Lobo”, MT-LB “Tartaruga”, quadriciclo, moto', ''],
+      ['veh_bmp_lobo', 'BMP “Lobo”, MT-LB “Tartaruga”, quadriciclo “Furão”, moto “Gafanhoto”', 'casco da Tartaruga em chapas destrutíveis'],
       ['drn_bruxa', 'Hexacóptero bombardeiro “Bruxa” (com térmica)', ''],
       ['prop_city', 'Carros destruídos, ponto de ônibus, postes, cercas, dentes de dragão', ''],
       ['season_pack', 'Variações de neve e lama para blocos e veículos', ''],
@@ -249,6 +293,38 @@ Liste por ordem de gravidade com arquivo:linha e proponha a correção. Não alt
         <p>${m.t}</p>`;
       box.appendChild(c);
     });
+  }
+
+  function renderVehicles() {
+    const box = $('#veh-grid');
+    const FAC = { uc: 'Coalizão', ru: 'Legião', both: 'As duas' };
+    const m = (x) => String(x).replace('.', ',');
+    VEHICLES.forEach((v) => {
+      const ppm = v.ppm || 16, px = v.size.map((x) => Math.round(x * ppm));
+      const c = el('article', 'card veh');
+      c.id = 'veh-' + v.id; c.dataset.f = v.f;
+      c.innerHTML = `<img src="assets/img/veh-${v.id}.webp" width="1200" height="800" loading="lazy" decoding="async" alt="Concept art voxel: ${v.n}">
+        <div class="veh-body">
+          <header><h3>${v.n}</h3><span class="fac fac-${v.f}">${FAC[v.f]}</span></header>
+          <p class="cls">${v.cls} · jogável na ${v.phase}</p>
+          <p>${v.d}</p>
+          <dl class="vspecs">
+            <div><dt>Tripulação</dt><dd>${v.crew}</dd></div>
+            <div><dt>Custo</dt><dd>${v.cost} suprimentos</dd></div>
+            <div class="wide"><dt>Armas</dt><dd>${v.arm}</dd></div>
+            <div><dt>Blindagem</dt><dd>${v.armor}</dd></div>
+            <div><dt>Velocidade</dt><dd>${v.speed}</dd></div>
+          </dl>
+          <p class="weak"><b>Ponto fraco:</b> ${v.weak}</p>
+          <p class="mdl"><b>Para modelar:</b> ${v.size.map(m).join(' × ')} m → ${px.join(' × ')} px (${ppm} px/m) · textura ${v.tex} · pivôs: ${v.pivots}</p>
+        </div>`;
+      box.appendChild(c);
+    });
+    $$('#veh-filter button').forEach((b) => b.addEventListener('click', () => {
+      $$('#veh-filter button').forEach((x) => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+      const f = b.dataset.f;
+      $$('#veh-grid .veh').forEach((c) => { c.hidden = f !== 'all' && c.dataset.f !== f && c.dataset.f !== 'both'; });
+    }));
   }
 
   function renderMechs() {
@@ -421,7 +497,7 @@ Liste por ordem de gravidade com arquivo:linha e proponha a correção. Não alt
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    renderModes(); renderMechs(); renderGantt(); renderAssets(); renderPrompts(); renderDecisions();
+    renderVehicles(); renderModes(); renderMechs(); renderGantt(); renderAssets(); renderPrompts(); renderDecisions();
     nav();
   });
 })();
