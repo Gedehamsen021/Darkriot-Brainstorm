@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Captura de GIFs</title></head>
+<body style="margin:0;background:#000">
+<canvas id="c" width="480" height="300"></canvas>
+<script src="../../assets/js/voxel.js"></script>
+<script src="../../assets/js/models.js"></script>
+<script src="../../assets/js/anims.js"></script>
+<script>
+  // Desenha o quadro t (segundos) da animação id e devolve PNG em base64.
+  window.grab = function (id, t) {
+    const c = document.getElementById('c'), ctx = c.getContext('2d');
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, c.width, c.height);
+    DR.ANIMS[id].frame(ctx, c.width, c.height, t);
+    return c.toDataURL('image/png');
+  };
+  window.animIds = () => Object.keys(DR.ANIMS);
+  window.animT = (id) => DR.ANIMS[id].T;
+</script>
+</body></html>

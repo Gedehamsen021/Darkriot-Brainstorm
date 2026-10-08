@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DARKRIOT — Brainstorm</title>
+<meta name="description" content="Brainstorm do DARKRIOT: milsim tático estilo Arma (UC × RU, facções fictícias) num mundo de blocos destrutível estilo Minecraft. Engine, concept arts, GIFs de gameplay, mecânicas e cronograma.">
+<meta property="og:title" content="DARKRIOT — Brainstorm">
+<meta property="og:description" content="Milsim tático num mundo de blocos destrutível. Engine, concept arts, mecânicas e cronograma.">
+<meta property="og:image" content="assets/gifs/destroy.gif">
+<meta name="theme-color" content="#0a0c0b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230a0c0b'/%3E%3Crect x='2' y='2' width='5' height='12' fill='%23ffb000'/%3E%3Crect x='9' y='2' width='5' height='5' fill='%23ffb000'/%3E%3Crect x='9' y='9' width='5' height='5' fill='%23c05050'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#top" aria-label="DARKRIOT — topo"><span class="logo-mark" aria-hidden="true"></span>DARKRIOT</a>
+  <nav class="nav" aria-label="Seções">
+    <a href="#visao">Visão</a>
+    <a href="#engine">Engine</a>
+    <a href="#faccoes">Facções</a>
+    <a href="#arte">Concept art</a>
+    <a href="#modos">Modos</a>
+    <a href="#mecanicas">Mecânicas</a>
+    <a href="#gifs">GIFs</a>
+    <a href="#cronograma">Cronograma</a>
+    <a href="#orquestracao">Orquestração</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <canvas id="hero-art" aria-label="Diorama voxel: trincheira com soldados, tanque com gaiola e campo de girassóis"></canvas>
+  <canvas id="embers" aria-hidden="true"></canvas>
+  <div class="hero-copy">
+    <p class="kicker">// documento de brainstorm v0.1 · 08 out 2026</p>
+    <h1 class="glitch" data-text="DARKRIOT">DARKRIOT</h1>
+    <p class="lead">Milsim tático no estilo <b>Arma</b>, com o conflito <b>UC × RU</b> como inspiração, num mundo de <b>blocos totalmente destrutível</b> no estilo <b>Minecraft</b>. Cave trincheiras, derrube prédios, pilote drones FPV, e segure a linha.</p>
+    <ul class="chips">
+      <li>Godot 4</li><li>Voxel destrutível</li><li>32 × 32 jogadores</li><li>Drones FPV + EW</li><li>PC / Steam</li>
+    </ul>
+    <div class="cta">
+      <a class="btn" href="#cronograma">Ver cronograma</a>
+      <a class="btn ghost" href="#gifs">Ver gameplay (GIFs)</a>
+    </div>
+  </div>
+  <div class="hazard" aria-hidden="true"></div>
+</section>
+
+<!-- ================= VISÃO ================= -->
+<section id="visao" class="sec">
+  <div class="sec-head">
+    <p class="sec-num">01 // visão</p>
+    <h2>O jogo em uma frase</h2>
+    <p class="sec-sub">A tensão de <b>Arma / Squad</b> — balística, rádio, logística, drones — num mundo onde <b>cada bloco pode ser cavado, explodido ou fortificado</b>. A linha de frente não é desenhada pelo level designer: é cavada pelos jogadores.</p>
+  </div>
+
+  <div class="pillars">
+    <article class="pillar"><span>P1</span><h3>Cada bloco conta</h3><p>Destruição e construção são sistêmicas. Cobertura é temporária, a trincheira é sua, a ruína é consequência.</p></article>
+    <article class="pillar"><span>P2</span><h3>Guerra de drones</h3><p>FPV kamikaze, observação, artilharia corrigida e guerra eletrônica: o céu é parte do campo de batalha.</p></article>
+    <article class="pillar"><span>P3</span><h3>Logística é munição</h3><p>Construir, reviver e atirar custam suprimentos. Quem controla as estradas controla a guerra.</p></article>
+    <article class="pillar"><span>P4</span><h3>Esquadrão &gt; herói</h3><p>Papéis claros, rádio e cooperação. Um soldado sozinho não segura um setor.</p></article>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3 class="card-title">Ficha técnica</h3>
+      <dl class="sheet">
+        <div><dt>Gênero</dt><dd>Milsim tático + sandbox voxel</dd></div>
+        <div><dt>Câmera</dt><dd>1ª pessoa (3ª opcional em veículos)</dd></div>
+        <div><dt>Jogadores</dt><dd>1–8 co-op · 32 × 32 PvP · meta 50 × 50</dd></div>
+        <div><dt>Plataforma</dt><dd>PC (Steam) · consoles depois do 1.0</dd></div>
+        <div><dt>Engine</dt><dd>Godot 4.x + GDExtension (C++)</dd></div>
+        <div><dt>Arte</dt><dd>Voxel / blocos 16 px, modelada no Blockbench</dd></div>
+        <div><dt>Negócio</dt><dd>Premium (Early Access) · cosméticos sem vantagem</dd></div>
+        <div><dt>Meta de EA</dt><dd>março de 2028</dd></div>
+      </dl>
+    </div>
+    <div class="card">
+      <h3 class="card-title">Os loops de jogo</h3>
+      <ol class="loops">
+        <li><b>30 segundos</b><span>Avançar → buscar cobertura → atirar ou cavar → curar.</span></li>
+        <li><b>5 minutos</b><span>O esquadrão toma um ponto, fortifica, pede suprimento, drone ou artilharia.</span></li>
+        <li><b>1 partida</b><span>A linha de frente anda setor por setor (A→E). A logística decide quem aguenta mais.</span></li>
+        <li><b>Meta</b><span>Kits, cosméticos, estatísticas de esquadrão, temporadas e Campanha Dinâmica.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ENGINE ================= -->
+<section id="engine" class="sec">
+  <div class="sec-head">
+    <p class="sec-num">02 // engine</p>
+    <h2>Escolha: Godot 4</h2>
+    <p class="sec-sub">Para um dev que <b>orquestra IA por prompts</b> e <b>cria os próprios modelos</b>, o que pesa é: a IA conseguir ler e escrever tudo, licença sem dor de cabeça e um pipeline direto do Blockbench.</p>
+  </div>
+
+  <div class="verdict card">
+    <div class="verdict-badge">ESCOLHIDA</div>
+    <div>
+      <h3>Godot 4.x <small>(versão estável mais recente)</small></h3>
+      <ul class="ticks">
+        <li><b>Tudo é texto.</b> Cenas <code>.tscn</code>, recursos <code>.tres</code> e scripts <code>.gd</code> são arquivos legíveis: a IA cria e edita cenas inteiras, não só scripts. É o maior multiplicador para quem trabalha por prompts.</li>
+        <li><b>Livre (MIT), sem royalties.</b> O jogo é 100% seu.</li>
+        <li><b>GDScript + C++.</b> GDScript para gameplay (rápido de gerar e revisar); GDExtension em C++ para o núcleo voxel quando o profiler pedir.</li>
+        <li><b>Blockbench → glTF → Godot</b> é nativo: arrasta o <code>.glb</code> e pronto.</li>
+        <li><b>Multiplayer embutido</b> (ENet, RPCs, MultiplayerSynchronizer) e <b>servidor dedicado headless</b>.</li>
+        <li><b>Leve.</b> O editor abre em segundos; iterar rápido importa mais que gráfico fotorrealista num jogo de blocos.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="cmp">
+      <caption>Comparativo para o DARKRIOT</caption>
+      <thead><tr><th scope="col">Critério</th><th scope="col" class="win">Godot 4</th><th scope="col">Unity 6</th><th scope="col">Unreal 5</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Licença</th><td class="win">MIT, grátis, sem royalties</td><td>Grátis até US$ 200 mil/ano, depois Pro</td><td>5% de royalties acima de US$ 1 mi</td></tr>
+        <tr><th scope="row">IA edita cenas?</th><td class="win">Sim — tudo em texto</td><td>Parcial — YAML com GUIDs</td><td>Difícil — .uasset binário, Blueprints</td></tr>
+        <tr><th scope="row">Voxel</th><td>Voxel Tools (Zylann) ou núcleo próprio</td><td>Vários assets pagos</td><td>Voxel Plugin</td></tr>
+        <tr><th scope="row">Multiplayer</th><td>Bom; escala grande exige trabalho</td><td>Netcode / Fish-Net / Mirror</td><td class="win">O melhor para escala grande</td></tr>
+        <tr><th scope="row">Estilo de blocos</th><td class="win">Ótimo (Forward+, fog volumétrica)</td><td class="win">Ótimo (URP)</td><td>Exagero para blocos</td></tr>
+        <tr><th scope="row">Peso / iteração</th><td class="win">Muito leve</td><td>Médio</td><td>Pesado</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3 class="card-title">Stack completa</h3>
+      <ul class="stack">
+        <li><b>Engine</b> Godot 4.x · GDScript tipado · GDExtension (C++)</li>
+        <li><b>Voxel</b> chunks 16³, greedy meshing, atlas 16×16 (base: Voxel Tools ou próprio)</li>
+        <li><b>Rede</b> ENet · servidor autoritativo 30 Hz · GodotSteam (lobby e P2P)</li>
+        <li><b>Voz</b> AudioEffectCapture + Opus (proximidade e rádio)</li>
+        <li><b>Modelos</b> Blockbench → <code>.glb</code></li>
+        <li><b>Texturas</b> Aseprite ou Pixelorama (feito em Godot)</li>
+        <li><b>Testes</b> GUT (Godot Unit Test)</li>
+        <li><b>Versão</b> Git + Git LFS · GitHub Actions (export automático)</li>
+        <li><b>IA</b> Claude Code (código, cenas, shaders, testes, revisão)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="card-title">Arquitetura de rede</h3>
+      <div class="arch">
+        <div class="node"><b>Cliente</b><span>input → predição</span><span>render voxel</span><span>UI · áudio · voz</span></div>
+        <div class="wire"><span>inputs 30 Hz →</span><span>← snapshots + deltas de chunk</span></div>
+        <div class="node srv"><b>Servidor dedicado</b><span>simulação autoritativa</span><span>mundo voxel oficial</span><span>bots · regras · anti-cheat</span></div>
+        <div class="wire"><span>↕</span></div>
+        <div class="node ext"><b>Serviços</b><span>Steam: lobby, amigos, workshop</span><span>backend leve: stats e bans</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Escala do mundo (decisão recomendada):</b> 1 bloco = 1 m, 16 px por bloco (padrão Minecraft/Blockbench). Soldado ≈ 1,8 bloco (≈ 29 px). Trincheira padrão: 2 blocos de profundidade. Mapa principal 4 × 4 km = 4096 × 4096 colunas, com streaming de chunks e LOD.
+  </div>
+</section>
+
+<!-- ================= FACÇÕES & MUNDO ================= -->
+<section id="faccoes" class="sec">
+  <div class="sec-head">
+    <p class="sec-num">03 // facções &amp; mundo</p>
+    <h2>UC × RU, em versão fictícia</h2>
+    <p class="sec-sub">O DNA visual e tático vem da guerra moderna no Leste Europeu — fitas de identificação, estepe, girassóis, drones, trincheiras. As facções, o país e os lugares são <b>fictícios</b>: dá liberdade criativa, evita retratar unidades e tragédias reais e simplifica lojas, mídia e classificação indicativa.</p>
+  </div>
+
+  <div class="factions">
+    <article class="faction uc">
+      <header><div class="flag"><i></i><i></i></div><div><h3>Coalizão Kalyna</h3><p>inspirada em UC · defensores</p></div></header>
+      <p class="doctrine"><b>Doutrina:</b> mobilidade, drones e emboscadas. Equipamento misto, criativo, muita gambiarra de campo.</p>
+      <p class="perk"><b>Bônus “Enxame”:</b> drones FPV custam −30% de suprimento e recarregam mais rápido.</p>
+      <h4>Kits</h4>
+      <ul class="kits"><li>Fuzileiro</li><li>Líder de esquadrão</li><li>Médico</li><li>Sapador</li><li>Operador FPV</li><li>Antitanque “Ferrão”</li><li>Atirador (DMR)</li><li>Observador</li></ul>
+      <h4>Veículos</h4>
+      <ul class="kits"><li>IFV “Lince”</li><li>Pick-up técnica</li><li>Quadriciclo</li><li>Hexacóptero “Bruxa”</li></ul>
+      <p class="id"><b>Identificação:</b> fita amarela + azul nos braços e pernas · camuflagem de manchas</p>
+    </article>
+    <article class="faction ru">
+      <header><div class="flag"><i></i><i></i></div><div><h3>Legião Boreal</h3><p>inspirada em RU · atacantes</p></div></header>
+      <p class="doctrine"><b>Doutrina:</b> massa, artilharia e blindagem. Guerra eletrônica forte, ataques em ondas apoiados por fogo pesado.</p>
+      <p class="perk"><b>Bônus “Muralha de aço”:</b> artilharia e jammers custam −30% de suprimento.</p>
+      <h4>Kits</h4>
+      <ul class="kits"><li>Fuzileiro de assalto</li><li>Comandante</li><li>Médico</li><li>Sapador (minas)</li><li>Operador EW</li><li>Metralhador</li><li>Antitanque (RPG)</li><li>Artilheiro</li></ul>
+      <h4>Veículos</h4>
+      <ul class="kits"><li>Tanque “Urso T-7B”</li><li>BMP “Lobo”</li><li>MT-LB “Tartaruga”</li><li>Obuseiro “Prego”</li></ul>
+      <p class="id"><b>Identificação:</b> fita branca + vermelha · camuflagem digital · balaclava</p>
+    </article>
+  </div>
+
+  <div class="map-wrap card">
+    <div class="map-head">
+      <h3 class="card-title">Oblast de Vorsk — mapa tático (gerado)</h3>
+      <p>4 km × 2,5 km mostrados · grade de 500 m. Estepe com girassóis e trigo, cinturões de árvores, rio Vorskla com duas pontes, vilas, a cidade industrial de Vorsk e a mina de sal Krystal (túneis). Setores A–E ao longo da linha de frente.</p>
+    </div>
+    <canvas id="map" aria-label="Mapa tático procedural do Oblast de Vorsk com linha de frente e setores"></canvas>
+    <ul class="legend">
+      <li><i style="background:#c9a925"></i>Girassol</li><li><i style="background:#bfae6a"></i>Trigo</li><li><i style="background:#6b5236"></i>Arado</li>
+      <li><i style="background:#2f4a25"></i>Floresta / cinturão</li><li><i style="background:#3d6a8a"></i>Rio</li><li><i style="background:#9d9a93"></i>Cidade</li>
+      <li><i style="background:#3d6fd6"></i>Trincheiras da Coalizão</li><li><i style="background:#d23a3f"></i>Trincheiras da Legião</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= CONCEPT ART ================= -->
+<section id="arte" class="sec">
+  <div class="sec-head">
+    <p class="sec-num">04 // concept art</p>
+    <h2>Concept arts voxel</h2>
+    <p class="sec-sub">Renderizadas ao vivo por um mini motor voxel isométrico escrito para este site — cada bloco aqui pode virar referência direta para você modelar no Blockbench. Os comentários embaixo são as notas de modelagem.</p>
+  </div>
+  <div class="art-grid">
+    <figure class="art"><canvas data-art="coalizao" aria-label="Soldados da Coalizão em voxel"></canvas>
+      <figcaption><b>Soldado da Coalizão</b> Camuflagem de manchas (5 tons), fita amarela + azul sempre visível de longe — é o IFF do jogo. Mochila leve, fuzil AR com coronha tan, capacete com capa.</figcaption></figure>
+    <figure class="art"><canvas data-art="legiao" aria-label="Soldados da Legião em voxel"></canvas>
+      <figcaption><b>Soldado da Legião</b> Camuflagem digital (pixel 1:1), balaclava, fita branca + vermelha. Colete mais volumoso, fuzil AK com carregador cor ameixa. Silhueta mais “quadrada” que a da Coalizão.</figcaption></figure>
+    <figure class="art"><canvas data-art="tank" aria-label="Tanque voxel com gaiola anti-drone"></canvas>
+      <figcaption><b>Tanque “Urso T-7B”</b> Blocos de blindagem reativa, tora de desatolamento atrás, tambores extras. A gaiola anti-drone é um modelo separado, destrutível por partes.</figcaption></figure>
+    <figure class="art"><canvas data-art="trench" aria-label="Diorama de trincheira no campo de girassóis"></canvas>
+      <figcaption><b>Trincheira na estepe</b> Zigue-zague (contra fogo de enfiada), revestimento de tábuas, sacos de areia na borda, arame farpado à frente, girassóis ao fundo, cratera recente.</figcaption></figure>
+    <figure class="art"><canvas data-art="village" aria-label="Vila em ruínas com IFV"></canvas>
+      <figcaption><b>Vila em ruínas</b> Casa branca com detalhes azuis e telhado de metal. Tudo modular, com paredes de 1 bloco — destruição e reconstrução no mesmo sistema. IFV “Lince” passando.</figcaption></figure>
+    <figure class="art"><canvas data-art="fpv" aria-label="Drone FPV kamikaze voxel"></canvas>
+      <figcaption><b>Drone FPV kamikaze</b> Frame em X, 4 motores, câmera frontal, bateria com fita, ogiva amarrada por baixo. Modelado a 32 px/m (o dobro dos personagens), porque é pequeno e aparece de perto.</figcaption></figure>
+  </div>
+
+  <div class="card palette">
+    <h3 class="card-title">Paleta e identidade</h3>
+    <div class="pal-rows">
+      <div><span>Coalizão</span><i style="background:#5b6b3a"></i><i style="background:#6f7a45"></i><i style="background:#4a5530"></i><i style="background:#7c7350"></i><i style="background:#3d4528"></i><i style="background:#f5c400"></i><i style="background:#1f5fbf"></i></div>
+      <div><span>Legião</span><i style="background:#4d5a3c"></i><i style="background:#3b4530"></i><i style="background:#6b6a4a"></i><i style="background:#2e3326"></i><i style="background:#59654a"></i><i style="background:#f2f2f2"></i><i style="background:#c8262b"></i></div>
+      <div><span>Mundo</span><i style="background:#6b8a3a"></i><i style="background:#6b4e32"></i><i style="background:#f2c418"></i><i style="background:#e6e0d0"></i><i style="background:#4e6b62"></i><i style="background:#8a8a84"></i><i style="background:#3d6a8a"></i></div>
+      <div><span>Interface</span><i style="background:#0a0c0b"></i><i style="background:#141a17"></i><i style="background:#ffb000"></i><i style="background:#c05050"></i><i style="background:#5fb3a3"></i><i style="background:#e7eadf"></i></div>
+    </div>
+    <p class="muted">Regra de ouro: camuflagem com 5–6 tons no máximo por facção; cores fortes (fitas, interface) só onde existe informação de jogo.</p>
+  </div>
+</section>
+
+<!-- ================= MODOS ================= -->
+<section id="modos" class="sec">
+  <div class="sec-head">
+    <p class="sec-num">05 // conceitos de gameplay</p>
+    <h2>Modos de jogo</h2>
+    <p class="sec-sub">Um modo principal forte no lançamento (Linha de Frente) e modos menores que reaproveitam os mesmos sistemas.</p>
+  </div>
+  <div id="modes-grid" class="grid-3"></div>
+</section>
+
+<!-- ================= MECÂNICAS ================= -->
+<section id="mecanicas" class="sec">
+  <div class="sec-head">
+    <p class="sec-num">06 // mecânicas</p>
+    <h2>Sistemas do jogo</h2>
+    <p class="sec-sub">Cada mecânica tem uma fase: <span class="tag tag-mvp">MVP</span> entra no protótipo, <span class="tag tag-alpha">Alpha</span> no alpha fechado, <span class="tag tag-beta">Beta</span> antes do Early Access e <span class="tag tag-pós">Pós</span> depois do lançamento.</p>
+  </div>
+  <div id="mech-filter" class="filter" role="group" aria-label="Filtrar mecânicas por fase">
+    <button type="button" data-f="all" aria-pressed="true">Todas</button>
+    <button type="button" data-f="MVP" aria-pressed="false">MVP</button>
+    <button type="button" data-f="Alpha" aria-pressed="false">Alpha</button>
+    <button type="button" data-f="Beta" aria-pressed="false">Beta</button>
+    <button type="button" data-f="Pós" aria-pressed="false">Pós</button>
+  </div>
+  <div id="mech-grid" class="grid-3"></div>
+</section>
+
+<!-- ================= GIFS ================= -->
+<section id="gifs" class="sec">
+  <div class="sec-head">
+    <p class="sec-num">07 // como ficaria</p>
+    <h2>GIFs de gameplay</h2>
+    <p class="sec-sub">Loops animados ao vivo mostrando cada mecânica em ação. Cada um também está disponível como <code>.gif</code> de verdade para baixar e mandar no Discord ou usar em devlog.</p>
+  </div>
+  <div class="gif-grid">
+    <figure class="gif"><canvas data-anim="destroy" aria-label="Animação: RPG destrói parede de tijolos bloco a bloco"></canvas>
+      <figcaption><b>Destruição por material</b><span>Um RPG abre um buraco numa parede de tijolo: cada bloco vira detrito com física. Tijolo tem 40 de HP, concreto 80.</span><a href="assets/gifs/destroy.gif" download>baixar .gif</a></figcaption></figure>
+    <figure class="gif"><canvas data-anim="dig" aria-label="Animação: soldado cava trincheira e terra vira sacos de areia"></canvas>
+      <figcaption><b>Pá de sapador</b><span>Cavar transforma terra em sacos de areia. A trincheira cresce em tempo real e a parede ganha revestimento.</span><a href="assets/gifs/dig.gif" download>baixar .gif</a></figcaption></figure>
+    <figure class="gif"><canvas data-anim="fpv" aria-label="Animação: visão do óculos de um drone FPV mergulhando num tanque"></canvas>
+      <figcaption><b>FPV vs guerra eletrônica</b><span>Visão do óculos: bateria, altitude, RSSI caindo perto do jammer, impacto e “sinal perdido”.</span><a href="assets/gifs/fpv.gif" download>baixar .gif</a></figcaption></figure>
+    <figure class="gif"><canvas data-anim="artillery" aria-label="Animação: observador corrige tiro de artilharia até destruir bunker"></canvas>
+      <figcaption><b>Observador + artilharia</b><span>O drone marca o alvo, o primeiro tiro cai curto, o observador corrige, o segundo destrói o bunker — e a cratera fica no terreno.</span><a href="assets/gifs/artillery.gif" download>baixar .gif</a></figcaption></figure>
+    <figure class="gif"><canvas data-anim="build" aria-label="Animação: bunker sendo construído bloco a bloco no modo Fortaleza"></canvas>
+      <figcaption><b>Modo Fortaleza</b><span>Fase de construção: blocos encaixam no blueprint do bunker enquanto o relógio corre até o ataque.</span><a href="assets/gifs/build.gif" download>baixar .gif</a></figcaption></figure>
+    <figure class="gif"><canvas data-anim="nvg" aria-label="Animação: visão noturna com lasers infravermelhos e sinalizador"></canvas>
+      <figcaption><b>Blackout (noite)</b><span>Visão noturna, lasers IR, inimigos avançando no escuro — até o sinalizador estourar o ganho do tubo.</span><a href="assets/gifs/nvg.gif" download>baixar .gif</a></figcaption></figure>
+  </div>
+</section>
+
+<!-- ================= CRONOGRAMA ================= -->
+<section id="cronograma" class="sec">
+  <div class="sec-head">
+    <p class="sec-num">08 // cronograma</p>
+    <h2>Do zero ao Early Access</h2>
+    <p class="sec-sub">≈ 17 meses, começando na segunda-feira <b>12/10/2026</b>. Considera ~20–25 h por semana suas (orquestrar a IA, testar e modelar). Com menos tempo, estique as fases proporcionalmente — a ordem continua valendo.</p>
+  </div>
+
+  <ol id="milestones" class="milestones"></ol>
+  <p class="muted small">* A data do Steam Next Fest de outubro/2027 depende do calendário da Valve.</p>
+
+  <div class="gantt-scroll" tabindex="0" aria-label="Gráfico de Gantt (role para os lados no celular)">
+    <div id="gantt" class="gantt"></div>
+  </div>
+  <div class="gantt-legend"><span><i class="ia"></i>IA executa (você revisa)</span><span><i class="voce"></i>Você executa</span><span><i class="diamond"></i>Marco</span></div>
+
+  <h3 class="h3">Fases</h3>
+  <div id="phase-cards" class="grid-3"></div>
+
+  <h3 class="h3">As 12 primeiras semanas, sprint a sprint</h3>
+  <p class="muted">Cada semana tem uma tarefa de código (prompt para a IA) e uma de modelagem (sua) que se encaixam: o código da semana usa o modelo da semana.</p>
+  <div id="sprints" class="sprints"></div>
+</section>
+
+<!-- ================= ORQUESTRAÇÃO ================= -->
+<section id="orquestracao" class="sec">
+  <div class="sec-head">
+    <p class="sec-num">09 // orquestração</p>
+    <h2>Você no comando</h2>
+    <p class="sec-sub">Você é o diretor: decide, escreve os prompts, revisa e cria os modelos. A IA escreve o código. O fluxo abaixo mantém a qualidade alta mesmo com muito código gerado.</p>
+  </div>
+
+  <div class="flow">
+    <div class="step"><b>1 · Decidir</b><span>Escolha a feature da semana no cronograma. Escreva o critério de aceite.</span></div>
+    <div class="step"><b>2 · Prompt</b><span>Use um template abaixo. Peça o plano antes do código.</span></div>
+    <div class="step"><b>3 · IA codifica</b><span>Branch + código + testes + cena de demo no sandbox.</span></div>
+    <div class="step"><b>4 · Você testa</b><span>Abre no Godot, joga, tenta quebrar. Roda o prompt de revisão.</span></div>
+    <div class="step"><b>5 · Merge</b><span>PR aprovado → GitHub Actions gera a build → amigos testam.</span></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3 class="card-title">Guia do modelador (você)</h3>
+      <ul class="stack">
+        <li><b>Ferramenta</b> Blockbench, modo <i>Generic Model</i>, exporta <code>.glb</code></li>
+        <li><b>Escala</b> 16 px = 1 bloco = 1 m · soldado ≈ 29 px de altura</li>
+        <li><b>Detalhe extra</b> armas em 1ª pessoa e drones a 32 px/m</li>
+        <li><b>Texturas</b> potência de 2 · personagem 64×64 · veículo 128–256 · bloco 16×16</li>
+        <li><b>Ossos</b> root › hips › spine › chest › neck › head · arm_l/r_upper › lower › hand · leg_l/r_upper › lower › foot · <code>weapon_socket</code></li>
+        <li><b>Pivôs</b> arma no grip · torre <code>turret</code> e canhão <code>gun</code> separados · rodas <code>wheel_l_01</code>…</li>
+        <li><b>Nomes</b> <code>categoria_nome_variante.glb</code> (ex.: <code>veh_tank_urso_cage.glb</code>)</li>
+        <li><b>LOD</b> versão sem detalhes de 1 px para mais de 150 m</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="card-title">Checklist de modelos</h3>
+      <div class="progress"><div id="asset-bar"></div></div>
+      <p id="asset-progress" class="muted small"></p>
+      <div id="asset-list" class="asset-list"></div>
+      <p class="muted small">As marcações ficam salvas só neste navegador.</p>
+    </div>
+  </div>
+
+  <h3 class="h3">Biblioteca de prompts</h3>
+  <p class="muted">Prompts prontos, na ordem do cronograma. Copie, cole no Claude Code dentro do repositório do jogo e ajuste os detalhes.</p>
+  <div id="prompt-list" class="prompts"></div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3 class="card-title">Decisões em aberto (recomendação)</h3>
+      <div class="table-wrap"><table id="decisions" class="dec"><thead><tr><th scope="col">Tema</th><th scope="col">Proposta</th><th scope="col">Rec.</th></tr></thead><tbody></tbody></table></div>
+    </div>
+    <div class="card">
+      <h3 class="card-title">Riscos e mitigação</h3>
+      <ul id="risks" class="risks"></ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="hazard" aria-hidden="true"></div>
+  <p><b>DARKRIOT</b> · brainstorm vivo · facções, lugares e veículos são fictícios.</p>
+  <p class="muted small">Concept arts e GIFs gerados por código (canvas) neste repositório · hospedado no GitHub Pages.</p>
+</footer>
+
+<script src="assets/js/voxel.js"></script>
+<script src="assets/js/models.js"></script>
+<script src="assets/js/art.js"></script>
+<script src="assets/js/anims.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
