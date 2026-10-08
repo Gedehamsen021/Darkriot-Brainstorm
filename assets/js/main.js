@@ -17,8 +17,6 @@
       t: 'Operação noturna sem marcadores no HUD. Só alguns kits têm visão noturna, o resto depende de sinalizadores, lasers IR e de reconhecer silhuetas. Drones térmicos viram rei — mantas anti-térmicas viram contra-jogada.' },
     { n: 'Caçada de Drones', tag: 'Alpha', p: '8 × 8', d: '15 min', m: 'Vila',
       t: 'Arena pequena e rápida: operadores de FPV contra caçadores com jammers, espingardas e redes. Ótimo modo de entrada para aprender a pilotar.' },
-    { n: 'Patrulha (Co-op PvE)', tag: 'Beta', p: '1–8', d: '20–40 min', m: 'Setor',
-      t: 'Missões contra IA: limpar trincheira, escoltar comboio, resgatar ferido. Serve de tutorial, de treino e de banco de testes para os bots, nos servidores oficiais como todo o resto.' },
     { n: 'Campanha Dinâmica', tag: 'Pós', p: 'Servidor', d: 'Semanas', m: 'Oblast inteiro',
       t: 'Guerra persistente nos servidores oficiais: um mapa estratégico de hexágonos, logística entre partidas, a destruição de uma batalha continua na próxima. A meta de longo prazo do DARKRIOT.' },
   ];
@@ -54,11 +52,11 @@
       cut: 'Nada — fase curta e obrigatória.' },
     { id: 'F1', n: 'Protótipo do núcleo', s: 4, w: 8, c: '#ffb000',
       goal: 'Diversão em solo: andar, atirar, cavar e explodir num mundo de blocos.',
-      out: ['Terreno em chunks', 'Controlador FPS milsim', 'Destruição por material', 'Trincheiras e sacos de areia', 'FPV jogável', 'Bots simples'],
+      out: ['Terreno em chunks', 'Controlador FPS milsim', 'Destruição por material', 'Trincheiras e sacos de areia', 'FPV jogável', 'Alvos de teste (sem IA)'],
       cut: 'Integridade estrutural complexa → desabamento simples por coluna.' },
     { id: 'F2', n: 'Fundação multiplayer', s: 12, w: 8, c: '#5fb3a3',
       goal: 'Servidor dedicado autoritativo com 16 jogadores e mundo destrutível sincronizado.',
-      out: ['Servidor dedicado headless (roda sem jogador)', 'Predição + reconciliação', 'Deltas de chunk', 'Conexão por IP (só testes internos)', 'Teste de carga com bots'],
+      out: ['Servidor dedicado headless (roda sem jogador)', 'Predição + reconciliação', 'Deltas de chunk', 'Conexão por IP (só testes internos)', 'Teste de carga com clientes simulados'],
       cut: 'Integração Steam → fica para a F4.' },
     { id: 'F3', n: 'Vertical slice', s: 20, w: 12, c: '#e0723a',
       goal: 'Uma fatia “como no jogo final”: 1 mapa 2×2 km, 2 facções, Linha de Frente.',
@@ -70,11 +68,11 @@
       cut: 'Logística completa → só caixas de suprimento no Alpha.' },
     { id: 'F5', n: 'Conteúdo e Beta', s: 44, w: 12, c: '#7b6bd6',
       goal: 'Mapa completo 4×4 km, demo pública e Steam Next Fest.',
-      out: ['Mapa Vorsk completo', 'Logística e FOBs', 'Helicópteros de tropa e de carga', 'Blackout + Patrulha', 'Demo do Next Fest', 'Wishlists > 20 mil (meta)'],
+      out: ['Mapa Vorsk completo', 'Logística e FOBs', 'Helicópteros de tropa e de carga', 'Modo Blackout', 'Demo do Next Fest', 'Wishlists > 20 mil (meta)'],
       cut: 'Clima sazonal → só lama no Beta.' },
     { id: 'F6', n: 'Polimento → Early Access', s: 56, w: 17, c: '#3d6fd6',
       goal: 'Performance, onboarding e lançamento em Acesso Antecipado na Steam.',
-      out: ['Tutorial jogável', 'Otimização (LOD de chunks, pooling)', 'Servidores oficiais por região + matchmaking', 'Trailer de lançamento', 'Lançamento EA'],
+      out: ['Servidores para novatos (PvP só entre iniciantes)', 'Otimização (LOD de chunks, pooling)', 'Servidores oficiais por região + matchmaking', 'Trailer de lançamento', 'Lançamento EA'],
       cut: 'Campanha Dinâmica e túneis → pós-lançamento.' },
   ];
 
@@ -110,7 +108,7 @@
     { ia: 'Ferramenta de trincheira: cavar, revestir, sacos de areia, preview fantasma.', mdl: 'Toras, tábuas, arame farpado, ouriço tcheco.', voce: 'Cronometrar: 10 m de trincheira tem que levar uns 2 min.', out: 'Cavar 10 m de trincheira em 2 min.' },
     { ia: 'Vida, sangramento, torniquete, supressão.', mdl: 'Uniformes das 2 facções, capacetes, coletes, fitas.', voce: 'Aprovar as silhuetas: dá para diferenciar as facções de longe?', out: 'Soldados das 2 facções no jogo.' },
     { ia: 'Drone FPV: física, controle, bateria, feed com ruído, explosão.', mdl: 'Drone FPV + ogiva + óculos.', voce: 'Pilotar o FPV e dar notas de controle.', out: 'Kamikaze num alvo.' },
-    { ia: 'Bots simples (patrulha, cobertura, atirar) + HUD mínimo.', mdl: 'Animações por partes: andar, correr, mirar, cavar, rastejar, morrer.', voce: 'Jogar contra os bots e anotar o que não diverte.', out: 'Combate contra bots.' },
+    { ia: 'HUD mínimo, placar e alvos de teste (bonecos parados, sem IA).', mdl: 'Animações por partes: andar, correr, mirar, cavar, rastejar, morrer.', voce: 'Testar o combate nos alvos e anotar o que não diverte.', out: 'Combate contra alvos de teste.' },
     { ia: 'Integração, correção de bugs, perfilamento.', mdl: 'LODs e revisão de todos os modelos do protótipo.', voce: 'Gravar o devlog #1 e fazer playtest com amigos.', out: 'M1 — protótipo solo jogável.' },
   ];
 
@@ -170,6 +168,8 @@ Você é o engenheiro principal do DARKRIOT, um milsim tático (estilo Arma/Squa
 - Linguagem: GDScript tipado para gameplay. C++ (GDExtension) apenas para hot paths (meshing, destruição) quando o profiler pedir.
 - Escala: 1 bloco = 1 m. Chunks 16×16×16. Y para cima.
 - Rede: servidor autoritativo desde o dia 1. Nenhuma lógica de gameplay confia no cliente.
+- Hospedagem: só servidores dedicados oficiais, headless. Jogador nunca hospeda (sem P2P, sem servidor dentro do cliente).
+- Jogo sempre PvP: sem bots, sem PvE e sem tutorial. Testes de carga usam clientes simulados (ferramenta interna, nunca dentro do jogo).
 - Pastas: res://core (voxel, rede), res://gameplay (armas, drones, construção), res://ui, res://assets (modelos .glb exportados de tools/models), res://sandbox (cenas de teste), res://tests (GUT).
 - Convenções: snake_case nos arquivos, PascalCase no class_name, sinais no passado (block_destroyed).
 - Toda feature: (1) plano curto antes de codar, (2) testes GUT, (3) cena demo em res://sandbox, (4) entrada em docs/CHANGELOG.md.
@@ -251,13 +251,14 @@ Liste por ordem de gravidade com arquivo:linha e proponha a correção. Não alt
     ['Tamanho da partida', '32×32 no Early Access; 50×50 quando a rede aguentar.', '32×32'],
     ['Modelo de negócio', 'Premium (≈ US$ 19,99 no EA) + cosméticos que não dão vantagem. Nada de pay-to-win. Vendas e cosméticos pagam os servidores oficiais.', 'Premium'],
     ['Respawn', 'Em FOBs e pontos de reagrupamento abastecidos. Modo hardcore com vida única por rodada.', 'FOB / rally'],
+    ['Modo de jogo', 'Sempre PvP: sem bots, sem PvE e sem tutorial. Quem entra aprende jogando, com dicas na tela de carregamento e servidores para novatos.', 'Só PvP'],
     ['Hospedagem', 'Só servidores dedicados oficiais. Jogador não hospeda: sem P2P, sem servidor dentro do jogo e sem pacote de servidor público.', 'Só oficiais'],
     ['Mods', 'Sem mods de servidor, já que só existem servidores oficiais. Depois do lançamento, mapas e cenários da comunidade entram nos oficiais após aprovação.', 'Curadoria'],
   ];
 
   const RISKS = [
     ['Escopo gigante (milsim + voxel + rede)', 'MVP rigoroso, lista “o que cortar” em cada fase, uma feature por vez.'],
-    ['Rede com mundo destrutível', 'Servidor autoritativo e deltas por chunk desde a F2; testes de carga com bots cedo.'],
+    ['Rede com mundo destrutível', 'Servidor autoritativo e deltas por chunk desde a F2; testes de carga com clientes simulados desde cedo.'],
     ['Performance com 64 jogadores + destruição', 'Núcleo em C++ (GDExtension), limite de detritos, LOD de chunks, perfilar toda semana.'],
     ['Tema sensível (guerra real)', 'Facções e lugares fictícios, sem crimes de guerra; foco na tática e no soldado comum.'],
     ['Código de IA virar “espaguete”', 'CLAUDE.md, testes obrigatórios, prompt de revisão, PR pequeno, você aprova tudo.'],
@@ -489,6 +490,121 @@ Liste por ordem de gravidade com arquivo:linha e proponha a correção. Não alt
     RISKS.forEach(([a, b]) => rl.appendChild(el('li', '', `<b>${a}</b><span>${b}</span>`)));
   }
 
+  /* ======================= EXPORTAR (.md) ======================= */
+
+  const clean = (node) => (node ? node.textContent.replace(/\s+/g, ' ').trim() : '');
+  const today = () => new Date().toLocaleDateString('pt-BR');
+
+  function download(name, text) {
+    const url = URL.createObjectURL(new Blob([text], { type: 'text/markdown;charset=utf-8' }));
+    const a = el('a'); a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+
+  function promptsMarkdown(level) {
+    const h = '#'.repeat(level || 1), L = [];
+    if (!level) L.push('# DARKRIOT — Biblioteca de prompts', '', `Exportado do site de brainstorm em ${today()}. Cole cada prompt no Claude Code dentro do repositório do jogo.`, '');
+    PROMPTS.forEach((p) => L.push(`${h}# ${p.n}`, '', `_${p.d}_`, '', '```text', p.p, '```', ''));
+    return L.join('\n');
+  }
+
+  // Lista "rótulo: texto" a partir de itens com <b> ou <dt>/<dd>.
+  function labeled(items, labelSel, valueSel) {
+    return items.map((it) => {
+      const lab = clean($(labelSel, it));
+      const val = valueSel ? clean($(valueSel, it)) : clean(it).slice(lab.length).trim();
+      return `- **${lab}**: ${val}`;
+    });
+  }
+
+  function documentMarkdown() {
+    const L = [];
+    const add = (...x) => L.push(...x);
+    const sec = (title) => add('', `## ${title}`, '');
+    const sub = (id) => $$(`#${id} .sec-sub`).forEach((p) => add(clean(p), ''));
+    add('# DARKRIOT — Documento de brainstorm', '',
+      `Exportado do site em ${today()}. Milsim tático estilo Arma (UC × RU, com facções fictícias) num mundo de blocos destrutível estilo Minecraft.`,
+      'Use como contexto para a IA, por exemplo em `docs/brainstorm.md` no repositório do jogo.');
+
+    sec('1. Visão'); sub('visao');
+    add('### Pilares', '', ...$$('#visao .pillar').map((p) => `- **${clean($('h3', p))}**: ${clean($('p', p))}`));
+    add('', '### Ficha técnica', '', ...labeled($$('#visao .sheet div'), 'dt', 'dd'));
+    add('', '### Loops de jogo', '', ...labeled($$('#visao .loops li'), 'b', 'span'));
+
+    sec('2. Engine'); sub('engine');
+    add(`### ${clean($('#engine .verdict h3'))}`, '', ...$$('#engine .ticks li').map((li) => `- ${clean(li)}`));
+    const rows = $$('#engine .cmp tr').map((tr) => $$('th, td', tr).map((c) => clean(c)));
+    if (rows.length) add('', '### Comparativo', '', `| ${rows[0].join(' | ')} |`, `|${rows[0].map(() => ' --- ').join('|')}|`, ...rows.slice(1).map((r) => `| ${r.join(' | ')} |`));
+    add('', '### Stack', '', ...labeled($$('#engine .stack li'), 'b'));
+    add('', '### Arquitetura de rede', '', ...$$('#engine .arch .node').map((n) => `- **${clean($('b', n))}**: ${$$('span', n).map(clean).join(' · ')}`));
+    $$('#engine .note').forEach((n) => add('', clean(n)));
+
+    sec('3. Facções e mundo'); sub('faccoes');
+    $$('#faccoes .faction').forEach((f) => {
+      add(`### ${clean($('h3', f))} (${clean($('header p', f))})`, '');
+      [...f.children].slice(1).forEach((c) => {
+        if (c.tagName === 'H4') add(`**${clean(c)}:**`);
+        else if (c.matches('ul')) add($$('li', c).map(clean).join(', '), '');
+        else add(clean(c), '');
+      });
+    });
+    add('### Mapa', '', clean($('#faccoes .map-head p')));
+
+    sec('4. Concept arts (notas de modelagem)'); sub('arte');
+    add(...labeled($$('#arte figcaption'), 'b'));
+
+    sec('5. Veículos'); sub('veiculos');
+    const TYPE = { blindado: 'Blindados', apoio: 'Apoio e engenharia', leve: 'Leves', civil: 'Civis', aereo: 'Aéreos', drone: 'Drones' };
+    const FAC = { uc: 'Coalizão', ru: 'Legião', both: 'As duas' };
+    for (const t of Object.keys(TYPE)) {
+      const list = VEHICLES.filter((v) => v.t === t);
+      if (!list.length) continue;
+      add(`### ${TYPE[t]} (${list.length})`, '');
+      list.forEach((v) => {
+        const ppm = v.ppm || 16, m = (x) => String(x).replace('.', ',');
+        add(`#### ${v.n} — ${FAC[v.f]}`, '', `${v.cls} · ${v.phase === 'Pós' ? 'pós-lançamento' : 'jogável na ' + v.phase}. ${v.d}`, '',
+          `- Tripulação: ${v.crew}`, `- Armas: ${v.arm}`, `- Blindagem: ${v.armor}`, `- Velocidade: ${v.speed}`,
+          `- Custo: ${typeof v.cost === 'number' ? v.cost + ' suprimentos' : v.cost}`, `- Ponto fraco: ${v.weak}`,
+          `- Para a IA modelar: ${v.size.map(m).join(' × ')} m → ${v.size.map((x) => Math.round(x * ppm)).join(' × ')} voxels (${ppm} por metro)${v.rotor ? `, rotor Ø ${m(v.rotor)} m` : ''}; peças móveis: ${v.pivots}`, '');
+      });
+    }
+
+    sec('6. Modos de jogo'); sub('modos');
+    MODES.forEach((m) => add(`### ${m.n} (${m.tag})`, '', `${m.p} · ${m.d} · ${m.m}`, '', m.t, ''));
+
+    sec('7. Mecânicas'); sub('mecanicas');
+    MECHS.forEach((m) => add(`### ${m.n} (${m.tag})`, '', m.t, '', `Por que é divertido: ${m.f}`, ''));
+
+    sec('8. GIFs de gameplay'); add(...labeled($$('#gifs figcaption'), 'b', 'span'));
+
+    sec('9. Cronograma'); sub('cronograma');
+    add('### Marcos', '', ...MILESTONES.map((m) => `- **${m.n}** — ${m.t} (${m.label || fmt(new Date(wk(m.w).getTime() - 864e5)) + ' ' + wk(m.w).getFullYear()})`));
+    add('', '### Fases', '');
+    PHASES.forEach((p) => add(`#### ${p.id} · ${p.n} — ${fmt(wk(p.s))} ${wk(p.s).getFullYear()} → ${fmt(endOf(p))} ${endOf(p).getFullYear()} (${p.w} semanas)`, '',
+      p.goal, '', ...p.out.map((o) => `- ${o}`), '', `Se atrasar, corte: ${p.cut}`, ''));
+    add('### As 12 primeiras semanas', '');
+    SPRINTS.forEach((sp, i) => add(`#### S${String(i + 1).padStart(2, '0')} · ${fmt(wk(i))} – ${fmt(new Date(wk(i + 1).getTime() - 864e5))}`, '',
+      `- IA (código): ${sp.ia}`, `- IA (modelos voxel): ${sp.mdl}`, `- Você (direção): ${sp.voce}`, `- Entregável: ${sp.out}`, ''));
+
+    sec('10. Orquestração'); sub('orquestracao');
+    add('### Fluxo', '', ...$$('#orquestracao .flow .step').map((st) => `- **${clean($('b', st))}**: ${clean($('span', st))}`));
+    add('', '### Guia de estilo dos modelos', '', ...labeled($$('#orquestracao .stack li'), 'b'));
+    add('', '### Checklist de modelos', '');
+    ASSETS.forEach((g) => add(`**${g.g}**`, '', ...g.items.map(([id, n, spec]) => `- [ ] \`${id}\` ${n}${spec ? ` (${spec})` : ''}`), ''));
+    add('### Decisões', '', ...DECISIONS.map(([a, b, c]) => `- **${a}** (${c}): ${b}`));
+    add('', '### Riscos e mitigação', '', ...RISKS.map(([a, b]) => `- **${a}**: ${b}`));
+
+    sec('11. Prompts');
+    add(promptsMarkdown(2));
+    return L.join('\n').replace(/\n{3,}/g, '\n\n') + '\n';
+  }
+
+  function exporters() {
+    $('#dl-prompts').addEventListener('click', () => download('darkriot-prompts.md', promptsMarkdown()));
+    $('#dl-doc').addEventListener('click', () => download('darkriot-brainstorm.md', documentMarkdown()));
+  }
+
   /* ======================= NAVEGAÇÃO ======================= */
 
   // Destaca a seção atual no menu. Só rola o próprio menu (na horizontal) e só quando o link
@@ -518,6 +634,7 @@ Liste por ordem de gravidade com arquivo:linha e proponha a correção. Não alt
 
   document.addEventListener('DOMContentLoaded', () => {
     renderVehicles(); renderFactionVehicles(); renderModes(); renderMechs(); renderGantt(); renderAssets(); renderPrompts(); renderDecisions();
+    exporters();
     nav();
   });
 })();

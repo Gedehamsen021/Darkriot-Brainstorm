@@ -49,6 +49,7 @@
     <div class="cta">
       <a class="btn" href="#cronograma">Ver cronograma</a>
       <a class="btn ghost" href="#gifs">Ver gameplay (GIFs)</a>
+      <a class="btn ghost" href="#prompts">Baixar prompts (.md)</a>
     </div>
   </div>
   <div class="hazard" aria-hidden="true"></div>
@@ -75,7 +76,7 @@
       <dl class="sheet">
         <div><dt>Gênero</dt><dd>Milsim tático + sandbox voxel</dd></div>
         <div><dt>Câmera</dt><dd>1ª pessoa (3ª opcional em veículos)</dd></div>
-        <div><dt>Jogadores</dt><dd>1–8 co-op · 32 × 32 PvP · meta 50 × 50</dd></div>
+        <div><dt>Jogadores</dt><dd>Sempre PvP: 32 × 32 · meta 50 × 50 (sem bots)</dd></div>
         <div><dt>Plataforma</dt><dd>PC (Steam) · consoles depois do 1.0</dd></div>
         <div><dt>Engine</dt><dd>Godot 4.x + GDExtension (C++)</dd></div>
         <div><dt>Arte</dt><dd>Voxel (16 voxels por metro), gerada pela IA a partir de código</dd></div>
@@ -154,7 +155,7 @@
       <div class="arch">
         <div class="node"><b>Cliente</b><span>input → predição</span><span>render voxel</span><span>UI · áudio · voz</span></div>
         <div class="wire"><span>inputs 30 Hz →</span><span>← snapshots + deltas de chunk</span></div>
-        <div class="node srv"><b>Servidor dedicado</b><span>roda sem gráficos e sem jogador</span><span>simulação autoritativa</span><span>mundo voxel oficial</span><span>bots · regras · anti-cheat</span></div>
+        <div class="node srv"><b>Servidor dedicado</b><span>roda sem gráficos e sem jogador</span><span>simulação autoritativa</span><span>mundo voxel oficial</span><span>regras · anti-cheat</span></div>
         <div class="wire"><span>↕</span></div>
         <div class="node ext"><b>Serviços</b><span>matchmaking: fila e lista dos servidores oficiais</span><span>Steam: login e amigos</span><span>backend: stats, bans e servidores sob demanda</span></div>
       </div>
@@ -286,7 +287,7 @@
   <div class="sec-head">
     <p class="sec-num">06 // conceitos de gameplay</p>
     <h2>Modos de jogo</h2>
-    <p class="sec-sub">Um modo principal forte no lançamento (Linha de Frente) e modos menores que reaproveitam os mesmos sistemas.</p>
+    <p class="sec-sub">Sempre jogador contra jogador: sem bots, sem PvE e sem tutorial. Um modo principal forte no lançamento (Linha de Frente) e modos menores que reaproveitam os mesmos sistemas.</p>
   </div>
   <div id="modes-grid" class="grid-3"></div>
 </section>
@@ -398,8 +399,13 @@
     </div>
   </div>
 
-  <h3 class="h3">Biblioteca de prompts</h3>
+  <h3 class="h3" id="prompts">Biblioteca de prompts</h3>
   <p class="muted">Prompts prontos, na ordem do cronograma. Copie, cole no Claude Code dentro do repositório do jogo e ajuste os detalhes.</p>
+  <div class="dl-row">
+    <button type="button" class="btn" id="dl-prompts">Baixar todos os prompts (.md)</button>
+    <button type="button" class="btn ghost" id="dl-doc">Baixar o documento completo (.md)</button>
+  </div>
+  <p class="muted small">O documento completo junta tudo deste site (visão, engine, facções, veículos, modos, mecânicas, cronograma, decisões e prompts) num arquivo só, para você dar de contexto para a IA, por exemplo em <code>docs/brainstorm.md</code> no repositório do jogo.</p>
   <div id="prompt-list" class="prompts"></div>
 
   <div class="two-col">

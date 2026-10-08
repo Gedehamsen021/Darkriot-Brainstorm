@@ -17,7 +17,7 @@ Site de brainstorm do **DARKRIOT**: um milsim tático no estilo *Arma*, inspirad
 3. **Facções e mundo**: Coalizão Kalyna × Legião Boreal, kits, veículos e o mapa tático procedural do Oblast de Vorsk
 4. **Concept arts**: geradas por um mini motor voxel isométrico escrito em JavaScript (`assets/js/voxel.js`)
 5. **Veículos**: concept art e ficha de 38 veículos — 26 terrestres e aquáticos (6 civis), 11 aeronaves e o drone pesado — com função, armas, blindagem, custo, ponto fraco e medidas para a IA modelar
-6. **Modos de jogo**: Linha de Frente, Fortaleza, Blackout, Caçada de Drones, Patrulha e Campanha Dinâmica
+6. **Modos de jogo** (sempre PvP, sem bots e sem tutorial): Linha de Frente, Fortaleza, Blackout, Caçada de Drones e Campanha Dinâmica
 7. **Mecânicas**: 17 sistemas com filtro por fase (MVP, Alpha, Beta, Pós)
 8. **GIFs de gameplay**: 6 loops animados, também em `.gif` para baixar
 9. **Cronograma**: Gantt de out/2026 até o Early Access (mar/2028), marcos, fases e as 12 primeiras semanas sprint a sprint
