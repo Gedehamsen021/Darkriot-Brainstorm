@@ -78,7 +78,7 @@
         <div><dt>Jogadores</dt><dd>1–8 co-op · 32 × 32 PvP · meta 50 × 50</dd></div>
         <div><dt>Plataforma</dt><dd>PC (Steam) · consoles depois do 1.0</dd></div>
         <div><dt>Engine</dt><dd>Godot 4.x + GDExtension (C++)</dd></div>
-        <div><dt>Arte</dt><dd>Voxel / blocos 16 px, modelada no Blockbench</dd></div>
+        <div><dt>Arte</dt><dd>Voxel (16 voxels por metro), gerada pela IA a partir de código</dd></div>
         <div><dt>Negócio</dt><dd>Premium (Early Access) · cosméticos sem vantagem</dd></div>
         <div><dt>Meta de EA</dt><dd>março de 2028</dd></div>
       </dl>
@@ -100,7 +100,7 @@
   <div class="sec-head">
     <p class="sec-num">02 // engine</p>
     <h2>Escolha: Godot 4</h2>
-    <p class="sec-sub">Para um dev que <b>orquestra IA por prompts</b> e <b>cria os próprios modelos</b>, o que pesa é: a IA conseguir ler e escrever tudo, licença sem dor de cabeça e um pipeline direto do Blockbench.</p>
+    <p class="sec-sub">Para um dev que <b>orquestra IA por prompts</b> e deixa a IA criar <b>o código e os modelos</b>, o que pesa é: a IA conseguir ler e escrever tudo (scripts, cenas e modelos), licença sem dor de cabeça e um caminho direto dos modelos voxel para o jogo.</p>
   </div>
 
   <div class="verdict card">
@@ -111,7 +111,7 @@
         <li><b>Tudo é texto.</b> Cenas <code>.tscn</code>, recursos <code>.tres</code> e scripts <code>.gd</code> são arquivos legíveis: a IA cria e edita cenas inteiras, não só scripts. É o maior multiplicador para quem trabalha por prompts.</li>
         <li><b>Livre (MIT), sem royalties.</b> O jogo é 100% seu.</li>
         <li><b>GDScript + C++.</b> GDScript para gameplay (rápido de gerar e revisar); GDExtension em C++ para o núcleo voxel quando o profiler pedir.</li>
-        <li><b>Blockbench → glTF → Godot</b> é nativo: arrasta o <code>.glb</code> e pronto.</li>
+        <li><b>Modelos voxel entram direto.</b> A IA escreve cada modelo como código e exporta <code>.vox</code> (abre no MagicaVoxel) e <code>.glb</code> (entra no Godot sem conversão).</li>
         <li><b>Multiplayer embutido</b> (ENet, RPCs, MultiplayerSynchronizer) e <b>servidor dedicado headless</b>.</li>
         <li><b>Leve.</b> O editor abre em segundos; iterar rápido importa mais que gráfico fotorrealista num jogo de blocos.</li>
       </ul>
@@ -141,8 +141,9 @@
         <li><b>Voxel</b> chunks 16³, greedy meshing, atlas 16×16 (base: Voxel Tools ou próprio)</li>
         <li><b>Rede</b> ENet · servidor autoritativo 30 Hz · GodotSteam (lobby e P2P)</li>
         <li><b>Voz</b> AudioEffectCapture + Opus (proximidade e rádio)</li>
-        <li><b>Modelos</b> Blockbench → <code>.glb</code></li>
-        <li><b>Texturas</b> Aseprite ou Pixelorama (feito em Godot)</li>
+        <li><b>Modelos</b> voxel como código (IA) → <code>.vox</code> + <code>.glb</code></li>
+        <li><b>Cores</b> paleta fixa de 256 cores (nada de textura para pintar)</li>
+        <li><b>Retoques</b> MagicaVoxel (grátis), se você quiser mexer à mão</li>
         <li><b>Testes</b> GUT (Godot Unit Test)</li>
         <li><b>Versão</b> Git + Git LFS · GitHub Actions (export automático)</li>
         <li><b>IA</b> Claude Code (código, cenas, shaders, testes, revisão)</li>
@@ -161,7 +162,7 @@
   </div>
 
   <div class="note">
-    <b>Escala do mundo (decisão recomendada):</b> 1 bloco = 1 m, 16 px por bloco (padrão Minecraft/Blockbench). Soldado ≈ 1,8 bloco (≈ 29 px). Trincheira padrão: 2 blocos de profundidade. Mapa principal 4 × 4 km = 4096 × 4096 colunas, com streaming de chunks e LOD.
+    <b>Escala do mundo (decisão recomendada):</b> 1 bloco = 1 m; modelos com 16 voxels por metro (o mesmo “pixel” do Minecraft). Soldado ≈ 1,8 bloco (≈ 29 voxels de altura). Trincheira padrão: 2 blocos de profundidade. Mapa principal 4 × 4 km = 4096 × 4096 colunas, com streaming de chunks e LOD.
   </div>
 </section>
 
@@ -179,9 +180,9 @@
       <p class="doctrine"><b>Doutrina:</b> mobilidade, drones e emboscadas. Equipamento misto, criativo, muita gambiarra de campo.</p>
       <p class="perk"><b>Bônus “Enxame”:</b> drones FPV custam −30% de suprimento e recarregam mais rápido.</p>
       <h4>Kits</h4>
-      <ul class="kits"><li>Fuzileiro</li><li>Líder de esquadrão</li><li>Médico</li><li>Sapador</li><li>Operador FPV</li><li>Antitanque “Ferrão”</li><li>Atirador (DMR)</li><li>Observador</li></ul>
+      <ul class="kits"><li>Fuzileiro</li><li>Líder de esquadrão</li><li>Médico</li><li>Sapador</li><li>Operador FPV</li><li>Antitanque “Ferrão”</li><li>Atirador (DMR)</li><li>Observador</li><li>Piloto</li></ul>
       <h4>Veículos</h4>
-      <ul class="kits"><li><a href="#veh-lince">IFV “Lince”</a></li><li><a href="#veh-coiote">Pick-up “Coiote”</a></li><li><a href="#veh-furao">Quadriciclo “Furão”</a></li><li><a href="#veh-bruxa">Hexacóptero “Bruxa”</a></li><li><a href="#veh-mula">Caminhão “Mula”</a></li></ul>
+      <ul class="kits" data-veh="uc"></ul>
       <p class="id"><b>Identificação:</b> fita amarela + azul nos braços e pernas · camuflagem de manchas</p>
     </article>
     <article class="faction ru">
@@ -189,9 +190,9 @@
       <p class="doctrine"><b>Doutrina:</b> massa, artilharia e blindagem. Guerra eletrônica forte, ataques em ondas apoiados por fogo pesado.</p>
       <p class="perk"><b>Bônus “Muralha de aço”:</b> artilharia e jammers custam −30% de suprimento.</p>
       <h4>Kits</h4>
-      <ul class="kits"><li>Fuzileiro de assalto</li><li>Comandante</li><li>Médico</li><li>Sapador (minas)</li><li>Operador EW</li><li>Metralhador</li><li>Antitanque (RPG)</li><li>Artilheiro</li></ul>
+      <ul class="kits"><li>Fuzileiro de assalto</li><li>Comandante</li><li>Médico</li><li>Sapador (minas)</li><li>Operador EW</li><li>Metralhador</li><li>Antitanque (RPG)</li><li>Artilheiro</li><li>Piloto</li></ul>
       <h4>Veículos</h4>
-      <ul class="kits"><li><a href="#veh-urso">Tanque “Urso T-7B”</a></li><li><a href="#veh-lobo">BMP “Lobo”</a></li><li><a href="#veh-tartaruga">MT-LB “Tartaruga”</a></li><li><a href="#veh-prego">Obuseiro “Prego”</a></li><li><a href="#veh-gafanhoto">Moto “Gafanhoto”</a></li><li><a href="#veh-mula">Caminhão “Mula”</a></li></ul>
+      <ul class="kits" data-veh="ru"></ul>
       <p class="id"><b>Identificação:</b> fita branca + vermelha · camuflagem digital · balaclava</p>
     </article>
   </div>
@@ -218,7 +219,7 @@
   <div class="sec-head">
     <p class="sec-num">04 // concept art</p>
     <h2>Concept arts voxel</h2>
-    <p class="sec-sub">Geradas por código, com um mini motor voxel isométrico em JavaScript escrito para o projeto (<code>assets/js/voxel.js</code>) — cada bloco aqui pode virar referência direta para você modelar no Blockbench. Os comentários embaixo são as notas de modelagem.</p>
+    <p class="sec-sub">Geradas por código, com um mini motor voxel isométrico em JavaScript escrito para o projeto (<code>assets/js/voxel.js</code>) — o mesmo jeito que a IA vai gerar os modelos do jogo: voxel escrito como código. Os comentários embaixo são as notas de modelagem.</p>
   </div>
   <div class="art-grid">
     <figure class="art"><img src="assets/img/art-coalizao.webp" width="1200" height="800" loading="lazy" decoding="async" alt="Soldados da Coalizão em voxel">
@@ -232,7 +233,7 @@
     <figure class="art"><img src="assets/img/art-village.webp" width="1200" height="800" loading="lazy" decoding="async" alt="Vila em ruínas com IFV">
       <figcaption><b>Vila em ruínas</b> Casa branca com detalhes azuis e telhado de metal. Tudo modular, com paredes de 1 bloco — destruição e reconstrução no mesmo sistema. IFV “Lince” passando.</figcaption></figure>
     <figure class="art"><img src="assets/img/art-fpv.webp" width="1200" height="800" loading="lazy" decoding="async" alt="Drone FPV kamikaze voxel">
-      <figcaption><b>Drone FPV kamikaze</b> Frame em X, 4 motores, câmera frontal, bateria com fita, ogiva amarrada por baixo. Modelado a 32 px/m (o dobro dos personagens), porque é pequeno e aparece de perto.</figcaption></figure>
+      <figcaption><b>Drone FPV kamikaze</b> Frame em X, 4 motores, câmera frontal, bateria com fita, ogiva amarrada por baixo. Modelado a 32 voxels por metro (o dobro dos personagens), porque é pequeno e aparece de perto.</figcaption></figure>
   </div>
 
   <div class="card palette">
@@ -252,12 +253,26 @@
   <div class="sec-head">
     <p class="sec-num">05 // veículos</p>
     <h2>Veículos</h2>
-    <p class="sec-sub">Dez veículos: quatro da Coalizão (mobilidade e drones), cinco da Legião (blindagem, artilharia e massa) e o caminhão de logística que as duas usam. Cada silhueta é diferente de propósito, para dar para reconhecer de longe ou pela câmera de um drone. A arte é estilizada (os blindados aparecem compactos); as medidas reais para modelar estão em cada ficha.</p>
+    <p class="sec-sub">38 veículos: 26 terrestres e aquáticos (6 deles civis, que qualquer facção pega nas cidades), 11 aeronaves tripuladas e o drone pesado “Bruxa” (os FPV e os drones de observação são equipamento). Helicópteros são pilotáveis em todos os mapas; os aviões chegam como apoio aéreo chamado pelo comandante nos mapas de 4×4 km e ficam pilotáveis no mapa grande, depois do lançamento.</p>
+    <p class="sec-sub">Cada silhueta é diferente de propósito, para dar para reconhecer de longe ou pela câmera de um drone. A arte é estilizada; as medidas reais para modelar estão na ficha técnica de cada um.</p>
   </div>
-  <div id="veh-filter" class="filter" role="group" aria-label="Filtrar veículos por facção">
-    <button type="button" data-f="all" aria-pressed="true">Todos</button>
-    <button type="button" data-f="uc" aria-pressed="false">Coalizão</button>
-    <button type="button" data-f="ru" aria-pressed="false">Legião</button>
+  <div class="veh-filters">
+    <div id="veh-type" class="filter" role="group" aria-label="Filtrar veículos por tipo">
+      <button type="button" data-t="all" aria-pressed="true">Todos</button>
+      <button type="button" data-t="blindado" aria-pressed="false">Blindados</button>
+      <button type="button" data-t="apoio" aria-pressed="false">Apoio e engenharia</button>
+      <button type="button" data-t="leve" aria-pressed="false">Leves</button>
+      <button type="button" data-t="civil" aria-pressed="false">Civis</button>
+      <button type="button" data-t="aereo" aria-pressed="false">Aéreos</button>
+      <button type="button" data-t="drone" aria-pressed="false">Drones</button>
+    </div>
+    <div id="veh-fac" class="filter" role="group" aria-label="Filtrar veículos por facção">
+      <button type="button" data-f="all" aria-pressed="true">Todas as facções</button>
+      <button type="button" data-f="uc" aria-pressed="false">Coalizão</button>
+      <button type="button" data-f="ru" aria-pressed="false">Legião</button>
+      <button type="button" data-f="both" aria-pressed="false">Só compartilhados</button>
+    </div>
+    <p id="veh-count" class="muted small" aria-live="polite"></p>
   </div>
   <div id="veh-grid" class="veh-grid"></div>
 </section>
@@ -317,7 +332,7 @@
   <div class="sec-head">
     <p class="sec-num">09 // cronograma</p>
     <h2>Do zero ao Early Access</h2>
-    <p class="sec-sub">≈ 17 meses, começando na segunda-feira <b>12/10/2026</b>. Considera ~20–25 h por semana suas (orquestrar a IA, testar e modelar). Com menos tempo, estique as fases proporcionalmente — a ordem continua valendo.</p>
+    <p class="sec-sub">≈ 17 meses, começando na segunda-feira <b>12/10/2026</b>. Considera ~15–20 h por semana suas (orquestrar a IA, revisar o que ela entrega, testar e decidir) — sem modelar à mão, sobra tempo para playtests e comunidade. Com menos tempo, estique as fases proporcionalmente; a ordem continua valendo.</p>
   </div>
 
   <ol id="milestones" class="milestones"></ol>
@@ -332,7 +347,7 @@
   <div id="phase-cards" class="grid-3"></div>
 
   <h3 class="h3">As 12 primeiras semanas, sprint a sprint</h3>
-  <p class="muted">Cada semana tem uma tarefa de código (prompt para a IA) e uma de modelagem (sua) que se encaixam: o código da semana usa o modelo da semana.</p>
+  <p class="muted">Toda semana a IA entrega o código e os modelos voxel que esse código usa; você dirige, testa e aprova.</p>
   <div id="sprints" class="sprints"></div>
 </section>
 
@@ -341,33 +356,37 @@
   <div class="sec-head">
     <p class="sec-num">10 // orquestração</p>
     <h2>Você no comando</h2>
-    <p class="sec-sub">Você é o diretor: decide, escreve os prompts, revisa e cria os modelos. A IA escreve o código. O fluxo abaixo mantém a qualidade alta mesmo com muito código gerado.</p>
+    <p class="sec-sub">Você é o diretor: decide, escreve os prompts, revisa e aprova. A IA escreve o código e gera todos os modelos voxel (veículos, props, personagens e blocos). O fluxo abaixo mantém a qualidade alta mesmo com tanta coisa gerada.</p>
   </div>
 
   <div class="flow">
     <div class="step"><b>1 · Decidir</b><span>Escolha a feature da semana no cronograma. Escreva o critério de aceite.</span></div>
     <div class="step"><b>2 · Prompt</b><span>Use um template abaixo. Peça o plano antes do código.</span></div>
-    <div class="step"><b>3 · IA codifica</b><span>Branch + código + testes + cena de demo no sandbox.</span></div>
-    <div class="step"><b>4 · Você testa</b><span>Abre no Godot, joga, tenta quebrar. Roda o prompt de revisão.</span></div>
+    <div class="step"><b>3 · IA produz</b><span>Branch com código, testes, cena de demo e os modelos voxel que a feature usa.</span></div>
+    <div class="step"><b>4 · Você revisa</b><span>Joga no Godot, confere as prévias dos modelos com o guia de estilo, roda o prompt de revisão.</span></div>
     <div class="step"><b>5 · Merge</b><span>PR aprovado → GitHub Actions gera a build → amigos testam.</span></div>
   </div>
 
   <div class="two-col">
     <div class="card">
-      <h3 class="card-title">Guia do modelador (você)</h3>
+      <h3 class="card-title">Guia de estilo dos modelos</h3>
+      <p class="muted small">A IA segue, você aprova. Vira o arquivo <code>docs/estilo-voxel.md</code> do repositório do jogo.</p>
       <ul class="stack">
-        <li><b>Ferramenta</b> Blockbench, modo <i>Generic Model</i>, exporta <code>.glb</code></li>
-        <li><b>Escala</b> 16 px = 1 bloco = 1 m · soldado ≈ 29 px de altura</li>
-        <li><b>Detalhe extra</b> armas em 1ª pessoa e drones a 32 px/m</li>
-        <li><b>Texturas</b> potência de 2 · personagem 64×64 · veículo 128–256 · bloco 16×16</li>
-        <li><b>Ossos</b> root › hips › spine › chest › neck › head · arm_l/r_upper › lower › hand · leg_l/r_upper › lower › foot · <code>weapon_socket</code></li>
-        <li><b>Pivôs</b> arma no grip · torre <code>turret</code> e canhão <code>gun</code> separados · rodas <code>wheel_l_01</code>…</li>
-        <li><b>Nomes</b> <code>categoria_nome_variante.glb</code> (ex.: <code>veh_tank_urso_cage.glb</code>)</li>
-        <li><b>LOD</b> versão sem detalhes de 1 px para mais de 150 m</li>
+        <li><b>Fonte</b> cada modelo é um script em <code>tools/models/</code>; a IA muda o script, nunca o arquivo exportado</li>
+        <li><b>Exporta</b> <code>.vox</code> (MagicaVoxel) e <code>.glb</code> com greedy meshing (Godot) + prévia em PNG</li>
+        <li><b>Escala</b> 16 voxels por metro · soldado ≈ 29 voxels · face de bloco = 16 × 16</li>
+        <li><b>Detalhe</b> armas em 1ª pessoa e drones a 32 voxels por metro</li>
+        <li><b>Cores</b> paleta fixa de 256 cores; camuflagem com 5–6 tons por facção</li>
+        <li><b>Partes</b> personagens em partes rígidas, como no Minecraft: head, torso, arm_l/r, leg_l/r e <code>weapon_socket</code></li>
+        <li><b>Pivôs</b> torre <code>turret</code>, canhão <code>gun</code>, rodas <code>wheel_l_01</code>…, rotores <code>rotor_main</code></li>
+        <li><b>Nomes</b> <code>categoria_nome_variante</code> (ex.: <code>veh_tank_urso_cage</code>)</li>
+        <li><b>LOD</b> o exportador gera sozinho a versão de longe (voxels 2× maiores)</li>
+        <li><b>Retoque</b> mexeu à mão no MagicaVoxel? A IA incorpora a mudança no script</li>
       </ul>
     </div>
     <div class="card">
       <h3 class="card-title">Checklist de modelos</h3>
+      <p class="muted small">A IA gera, você aprova a prévia e marca aqui.</p>
       <div class="progress"><div id="asset-bar"></div></div>
       <p id="asset-progress" class="muted small"></p>
       <div id="asset-list" class="asset-list"></div>
@@ -399,6 +418,7 @@
   <p class="muted small">Concept arts, mapa e GIFs gerados por código neste repositório · hospedado no GitHub Pages.</p>
 </footer>
 
+<script src="assets/js/data-vehicles.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

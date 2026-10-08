@@ -9,7 +9,6 @@ const { chromium } = require('playwright');
 const OUT = path.join(__dirname, 'out');
 const FPS = 12.5;
 const ARTS = ['coalizao', 'legiao', 'tank', 'trench', 'village', 'fpv'];
-const VEHICLES = ['lince', 'coiote', 'furao', 'bruxa', 'urso', 'lobo', 'tartaruga', 'prego', 'gafanhoto', 'mula'];
 const save = (name, dataUrl) => {
   fs.mkdirSync(path.dirname(path.join(OUT, name)), { recursive: true });
   fs.writeFileSync(path.join(OUT, name), Buffer.from(dataUrl.split(',')[1], 'base64'));
@@ -37,7 +36,8 @@ async function open(browser, scale) {
   }
   if (all || want.includes('vehicles')) {
     const page = await open(browser, 2);
-    for (const id of VEHICLES) save(`veh-${id}.png`, await page.evaluate(([i]) => exportArt('veh-' + i, 600, 400), [id]));
+    const ids = await page.evaluate(() => DR_VEHICLES.map((v) => v.id));
+    for (const id of ids) save(`veh-${id}.png`, await page.evaluate(([i]) => exportArt('veh-' + i, 600, 400), [id]));
     console.log('veículos ok');
     await page.close();
   }

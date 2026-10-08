@@ -243,12 +243,9 @@
 
   /* ---------------- LOGÍSTICA (as duas facções) ---------------- */
 
-  DR.mula = function (v, X, Y, Z, tape) {
-    const P = DR.camo(['#4f5a36', '#56603a', '#48512f'], 3, 81);
-    const T = DR.camo(['#5f6040', '#6b6a48', '#55573a'], 2, 82);
-    tape = tape || UC;
+  // Frente de caminhão 6×6 com capô longo: chassi, cabine (x X+16..X+20), capô e grade (x X+27).
+  function uralFront(v, X, Y, Z, P) {
     v.box(X + 1, Y + 2, Z + 3, 26, 7, 1, '#2a2a26');
-    // cabine com capô longo
     v.box(X + 16, Y + 1, Z + 4, 5, 9, 6, P);
     v.box(X + 21, Y + 2, Z + 4, 6, 7, 3, P);
     v.box(X + 21, Y + 1, Z + 4, 4, 9, 2, P);
@@ -259,6 +256,13 @@
     v.box(X + 27, Y + 1, Z + 3, 1, 9, 1, '#222');
     v.set(X + 25, Y + 1, Z + 6, '#e8e2c0'); v.set(X + 25, Y + 9, Z + 6, '#e8e2c0');
     v.box(X + 15, Y + 9, Z + 5, 1, 1, 6, '#2b2b25');
+  }
+
+  DR.mula = function (v, X, Y, Z, tape) {
+    const P = DR.camo(['#4f5a36', '#56603a', '#48512f'], 3, 81);
+    const T = DR.camo(['#5f6040', '#6b6a48', '#55573a'], 2, 82);
+    tape = tape || UC;
+    uralFront(v, X, Y, Z, P);
     // carroceria com lona; o lado visível está enrolado e mostra a carga
     v.box(X + 1, Y + 1, Z + 4, 14, 9, 1, '#3a3a33');
     v.box(X + 1, Y + 1, Z + 5, 14, 1, 2, P); v.box(X + 1, Y + 9, Z + 5, 14, 1, 2, P);
@@ -442,4 +446,188 @@
       return v;
     },
   };
+
+  /* ---------------- HELICÓPTEROS (as duas facções, cada uma com a sua pintura) ---------------- */
+
+  // Pás do rotor principal saindo do cubo (cx, cy, z), no plano horizontal.
+  function rotor(v, cx, cy, z, R, n, start, col) {
+    for (let k = 0; k < n; k++) {
+      const a = start + k * 2 * Math.PI / n;
+      v.line(cx, cy, z, Math.round(cx + Math.cos(a) * R), Math.round(cy + Math.sin(a) * R), z, col);
+    }
+  }
+  // Rotor de cauda no plano x-z (lado +y).
+  function tailRotor(v, cx, y, cz, R, n, col) {
+    for (let k = 0; k < n; k++) {
+      const a = Math.PI / 2 + k * 2 * Math.PI / n;
+      v.line(cx, y, cz, Math.round(cx + Math.cos(a) * R), y, Math.round(cz + Math.sin(a) * R), col);
+    }
+  }
+  // Disco borrado do rotor girando (2D, por cima do render). plane: 'xy' (principal), 'xz' (cauda) ou 'yz' (hélice).
+  function disc(ctx, o, cx, cy, cz, R, plane, fill) {
+    ctx.beginPath();
+    for (let i = 0; i <= 48; i++) {
+      const t = i / 48 * Math.PI * 2;
+      const c = R * Math.cos(t), d = R * Math.sin(t);
+      const p = plane === 'xy' ? DR.project(cx + c, cy + d, cz, o)
+              : plane === 'yz' ? DR.project(cx, cy + c, cz + d, o)
+              : DR.project(cx + c, cy, cz + d, o);
+      if (i) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]);
+    }
+    ctx.closePath(); ctx.fillStyle = fill; ctx.fill();
+  }
+
+  const ROTOR = '#474c47', HUB = '#2b2b25', COCKPIT = '#2a3a4a', PORT = '#1e2a33';
+
+  // Transporte de tropas (inspirado no Mi-8). X = traseira da cabine; Z = base da fuselagem.
+  DR.libelula = function (v, X, Y, Z, paint, tape) {
+    const P = paint;
+    // cabine com cantos chanfrados
+    v.box(X, Y, Z + 1, 24, 8, 7, P);
+    for (const yy of [Y, Y + 7]) { v.carve(X, yy, Z + 1, 24, 1, 1); v.carve(X, yy, Z + 7, 24, 1, 1); }
+    // nariz e cabine de comando envidraçada
+    v.box(X + 24, Y, Z + 1, 4, 8, 6, P);
+    v.box(X + 28, Y + 1, Z + 1, 2, 6, 5, P);
+    v.box(X + 30, Y + 2, Z + 2, 2, 4, 3, P);
+    v.box(X + 26, Y + 1, Z + 5, 2, 6, 2, COCKPIT); v.box(X + 28, Y + 1, Z + 4, 2, 6, 2, COCKPIT); v.box(X + 30, Y + 2, Z + 3, 2, 4, 2, COCKPIT);
+    v.box(X + 27, Y + 1, Z + 4, 1, 6, 1, '#5d6569');
+    // janelas redondas, porta corrediça aberta e metralhadora de porta
+    for (let i = 2; i < 16; i += 3) v.set(X + i, Y + 7, Z + 5, PORT);
+    v.box(X + 19, Y + 7, Z + 2, 3, 1, 4, '#141714');
+    v.box(X + 15, Y + 8, Z + 2, 3, 1, 4, P);
+    v.box(X + 20, Y + 8, Z + 4, 1, 3, 1, BLACK);
+    // tanques externos e trem de pouso fixo
+    for (const yy of [Y + 8, Y - 2]) {
+      v.box(X + 7, yy, Z + 1, 7, 2, 3, P);
+      v.carve(X + 7, yy, Z + 1, 1, 2, 1); v.carve(X + 13, yy, Z + 3, 1, 2, 1);
+      v.box(X + 4, yy, Z, 1, 2, 1, HUB); v.box(X + 3, yy, Z - 2, 3, 2, 2, BLACK);
+    }
+    v.box(X + 26, Y + 3, Z, 1, 2, 1, HUB); v.box(X + 25, Y + 2, Z - 2, 3, 1, 2, BLACK); v.box(X + 25, Y + 5, Z - 2, 3, 1, 2, BLACK);
+    // carenagem dos motores, entradas de ar e escapes
+    v.box(X + 10, Y + 1, Z + 8, 14, 6, 3, P);
+    v.box(X + 24, Y + 1, Z + 8, 2, 2, 2, '#3b3d3f'); v.box(X + 24, Y + 5, Z + 8, 2, 2, 2, '#3b3d3f');
+    v.box(X + 26, Y + 1, Z + 8, 1, 2, 2, '#151515'); v.box(X + 26, Y + 5, Z + 8, 1, 2, 2, '#151515');
+    v.box(X + 11, Y + 7, Z + 8, 3, 2, 2, HUB);
+    // mastro, cubo e 5 pás
+    v.box(X + 15, Y + 3, Z + 11, 2, 2, 2, HUB);
+    v.box(X + 14, Y + 2, Z + 13, 4, 4, 1, HUB);
+    rotor(v, X + 16, Y + 4, Z + 14, 26, 5, 0.3, ROTOR);
+    // traseira (portas em concha), cone de cauda, estabilizador, deriva e rotor de cauda
+    v.box(X - 3, Y + 1, Z + 1, 3, 6, 5, P);
+    v.box(X - 5, Y + 2, Z + 4, 5, 4, 3, P);
+    v.box(X - 21, Y + 3, Z + 5, 16, 2, 2, P);
+    v.box(X - 14, Y, Z + 5, 3, 8, 1, P);
+    v.box(X - 25, Y + 3, Z + 5, 4, 2, 7, P); v.box(X - 26, Y + 3, Z + 10, 2, 2, 3, P);
+    v.box(X - 24, Y + 5, Z + 10, 1, 1, 1, HUB);
+    tailRotor(v, X - 24, Y + 6, Z + 10, 5, 3, ROTOR);
+    // identificação
+    v.box(X - 9, Y + 3, Z + 5, 1, 2, 2, tape[0]); v.box(X - 10, Y + 3, Z + 5, 1, 2, 2, tape[1]);
+    v.box(X + 4, Y + 7, Z + 2, 1, 1, 3, tape[0]); v.box(X + 3, Y + 7, Z + 3, 3, 1, 1, tape[0]);
+  };
+
+  // Carga pesada (inspirado no Mi-26), com palete pendurado no cabo.
+  DR.pelicano = function (v, X, Y, Z, paint, tape, load) {
+    const P = paint;
+    v.box(X, Y, Z + 1, 26, 10, 10, P);
+    for (const yy of [Y, Y + 9]) { v.carve(X, yy, Z + 1, 26, 1, 1); v.carve(X, yy, Z + 10, 26, 1, 1); }
+    // nariz alto com vidros
+    v.box(X + 26, Y + 1, Z + 1, 4, 8, 8, P);
+    v.box(X + 30, Y + 2, Z + 2, 2, 6, 5, P);
+    v.box(X + 28, Y + 1, Z + 7, 2, 8, 2, COCKPIT); v.box(X + 30, Y + 2, Z + 5, 2, 6, 2, COCKPIT);
+    v.box(X + 30, Y + 2, Z + 2, 2, 6, 1, '#5d6569');
+    // janelas, porta dianteira e carenagens laterais do trem de pouso
+    for (let i = 2; i < 24; i += 4) v.set(X + i, Y + 9, Z + 8, PORT);
+    v.box(X + 21, Y + 9, Z + 2, 3, 1, 5, '#2b2e2a'); v.box(X + 22, Y + 9, Z + 4, 1, 1, 2, P);
+    for (const yy of [Y + 10, Y - 2]) {
+      v.box(X + 6, yy, Z + 1, 10, 2, 3, P);
+      v.box(X + 8, yy, Z - 2, 2, 2, 3, BLACK); v.box(X + 12, yy, Z - 2, 2, 2, 3, BLACK);
+    }
+    v.box(X + 27, Y + 4, Z - 2, 2, 2, 3, BLACK);
+    // traseira com rampa, cone de cauda grosso, deriva e rotor de cauda de 5 pás
+    v.box(X - 6, Y + 1, Z + 4, 6, 8, 7, P);
+    v.box(X - 6, Y + 2, Z + 3, 6, 6, 1, '#4c5357');
+    v.box(X - 24, Y + 3, Z + 7, 18, 4, 3, P);
+    v.box(X - 29, Y + 4, Z + 7, 5, 2, 10, P);
+    v.box(X - 16, Y, Z + 8, 3, 10, 1, P);
+    v.box(X - 27, Y + 6, Z + 13, 1, 1, 1, HUB);
+    tailRotor(v, X - 27, Y + 7, Z + 13, 6, 5, ROTOR);
+    // motores gigantes, cubo e 8 pás
+    v.box(X + 8, Y + 1, Z + 11, 18, 8, 4, P);
+    v.box(X + 26, Y + 1, Z + 11, 2, 3, 3, '#3b3d3f'); v.box(X + 26, Y + 6, Z + 11, 2, 3, 3, '#3b3d3f');
+    v.box(X + 28, Y + 1, Z + 11, 1, 3, 3, '#151515'); v.box(X + 28, Y + 6, Z + 11, 1, 3, 3, '#151515');
+    v.box(X + 9, Y + 9, Z + 12, 3, 2, 2, HUB);
+    v.box(X + 14, Y + 4, Z + 15, 2, 2, 2, HUB);
+    v.box(X + 13, Y + 3, Z + 17, 4, 4, 1, HUB);
+    rotor(v, X + 15, Y + 5, Z + 18, 30, 8, 0.2, ROTOR);
+    // identificação
+    v.box(X - 14, Y + 3, Z + 7, 1, 4, 3, tape[0]); v.box(X - 15, Y + 3, Z + 7, 1, 4, 3, tape[1]);
+    v.box(X + 3, Y + 9, Z + 5, 2, 1, 2, tape[0]); v.set(X + 3, Y + 9, Z + 5, tape[1]);
+    if (!load) return;
+    // cabo com 4 pernas e palete de suprimentos com rede
+    const hx = X + 12, hy = Y + 5, lz = Z - 18;
+    v.box(hx, hy, Z, 1, 1, 1, HUB);
+    for (const [a, b] of [[-5, -4], [4, -4], [-5, 3], [4, 3]]) v.line(hx, hy, Z - 1, hx + a, hy + b, lz + 5, '#8d8f90');
+    v.box(hx - 5, hy - 4, lz, 10, 8, 1, '#6b4a2b');
+    for (const [a, b] of [[-5, -4], [-1, -4], [-5, 0], [-1, 0], [3, -4], [3, 0]]) DR.crate(v, hx + a, hy + b, lz + 1, (a + b) & 1 ? '#4f5a33' : undefined);
+    DR.crate(v, hx - 3, hy - 2, lz + 4);
+    for (let i = -5; i <= 4; i += 3) v.line(hx + i, hy - 4, lz + 4, hx + i, hy + 3, lz + 4, '#2f3a24');
+  };
+
+  // Liga voxels de outro Vox e projeta a sombra no chão (topo em gz).
+  function shadow(v, src, gz, dx, dy, col) {
+    src.each((x, y) => { if (v.has(x + dx, y + dy, gz)) v.set(x + dx, y + dy, gz, col); });
+  }
+  function merge(v, src) { src.each((x, y, z, c) => v.set(x, y, z, c)); }
+
+  A['veh-libelula'] = {
+    sky: ['#2b3a44', '#c4a77a'],
+    fitBox: [4, 8, 0, 60, 30, 26],
+    fg(ctx, W, Ht, o) {
+      disc(ctx, o, 42.5, 18.5, 24.5, 26, 'xy', 'rgba(40,44,40,0.14)');
+      disc(ctx, o, 2.5, 20.5, 20.5, 5, 'xz', 'rgba(40,44,40,0.2)');
+    },
+    build() {
+      const v = new DR.Vox();
+      DR.ground(v, -14, -10, 92, 56, 2, { grass: ['#c9a925', '#d6b52a', '#7d963f', '#b89a22'] });
+      for (let x = -14; x < 78; x += 9) for (let y = -10; y < 46; y++) v.set(x, y, 1, '#2f4a25');
+      for (let i = 0; i < 6; i++) DR.tree(v, -10 + i * 3, 30 + (i % 2) * 3, 2, 6 + (i % 3), false);
+      const h = new DR.Vox();
+      DR.libelula(h, 26, 14, 10, DR.camo(['#5d6a3f', '#6b6f47', '#4a5434', '#7a7452'], 3, 91), UC);
+      shadow(v, h, 1, 4, 4, '#4a4a26');
+      merge(v, h);
+      return v;
+    },
+  };
+  A['veh-pelicano'] = {
+    sky: ['#2f3840', '#a89a80'],
+    fitBox: [4, 6, 0, 62, 36, 41],
+    fg(ctx, W, Ht, o) {
+      const p = DR.project(42.5, 21.5, 2, o);
+      for (let i = 0; i < 9; i++) {
+        const a = i / 9 * Math.PI * 2, r = o.s * (10 + (i % 3) * 3);
+        dust(ctx, p[0] + Math.cos(a) * r * 1.4, p[1] + Math.sin(a) * r * 0.6, o.s * 4, 0.28, '170,150,115');
+      }
+      disc(ctx, o, 45.5, 21.5, 42.5, 30, 'xy', 'rgba(40,44,40,0.15)');
+      disc(ctx, o, 3.5, 23.5, 37.5, 6, 'xz', 'rgba(40,44,40,0.22)');
+    },
+    build() {
+      const v = new DR.Vox();
+      DR.ground(v, -12, -8, 92, 60, 2, { grass: ['#7a7446', '#6b6a3c', '#857b4a', '#8f7a58'] });
+      // heliponto da FOB: "H" de pedras brancas, sacos de areia, barraca e antena
+      for (let i = -3; i <= 3; i++) { v.set(39, 21 + i, 1, '#e8e2d0'); v.set(45, 21 + i, 1, '#e8e2d0'); }
+      for (let x = 40; x < 45; x++) v.set(x, 21, 1, '#e8e2d0');
+      DR.sandbags(v, 14, 33, 2, 40, 'x', 2);
+      v.box(12, 8, 2, 9, 7, 4, '#55603a'); v.box(13, 9, 6, 7, 5, 1, '#55603a'); v.box(14, 10, 7, 5, 3, 1, '#4b5533');
+      v.box(24, 9, 2, 1, 1, 14, '#2b2b25'); v.box(23, 9, 15, 3, 1, 1, '#2b2b25');
+      DR.crate(v, 12, 17, 2); DR.crate(v, 16, 17, 2, '#4f5a33'); DR.crate(v, 12, 17, 5);
+      const h = new DR.Vox();
+      DR.pelicano(h, 30, 16, 24, DR.camo(['#6b7478', '#7a8387', '#5d6569', '#848c90'], 3, 93), RU, true);
+      shadow(v, h, 1, 3, 3, '#5a5233');
+      merge(v, h);
+      return v;
+    },
+  };
+
+  DR.VH = { track, wheel, dirty, ruts, dust, rotor, tailRotor, disc, shadow, merge, uralFront,
+    PAINT, UC, RU, DARK, STEEL, GLASS, BLACK, HUB, ROTOR, COCKPIT, PORT, mud, dryField };
 })();

@@ -62,7 +62,8 @@
       const n = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0), Math.abs(z1 - z0)) || 1;
       for (let i = 0; i <= n; i++) {
         const t = i / n;
-        this.set(Math.round(x0 + (x1 - x0) * t), Math.round(y0 + (y1 - y0) * t), Math.round(z0 + (z1 - z0) * t), c);
+        const X = Math.round(x0 + (x1 - x0) * t), Y = Math.round(y0 + (y1 - y0) * t), Z = Math.round(z0 + (z1 - z0) * t);
+        this.set(X, Y, Z, typeof c === 'function' ? c(X, Y, Z) : c);
       }
       return this;
     }
@@ -83,8 +84,9 @@
   const A = Math.cos(Math.PI / 6), B = 0.5;
 
   // Calcula escala/offset para caber no canvas.
-  DR.fit = function (vox, W, H, pad, extraZ) {
-    const b = vox.bounds();
+  // bounds opcional [x0, y0, z0, x1, y1, z1]: enquadra só essa caixa (o resto pode sair da imagem).
+  DR.fit = function (vox, W, H, pad, extraZ, bounds) {
+    const b = bounds || vox.bounds();
     const minSX = (b[0] - (b[4] + 1)) * A, maxSX = (b[3] + 1 - b[1]) * A;
     const minSY = (b[0] + b[1]) * B - (b[5] + 1 + (extraZ || 0)), maxSY = (b[3] + 1 + b[4] + 1) * B - b[2];
     pad = pad == null ? 20 : pad;

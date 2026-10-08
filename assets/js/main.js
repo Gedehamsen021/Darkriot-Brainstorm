@@ -36,61 +36,21 @@
     { n: 'Logística e FOBs', tag: 'Beta', t: 'Munição, materiais e combustível saem do QG em caminhões. FOBs sem suprimento param de dar respawn. Cortar a estrada inimiga (ou explodir a ponte) é estratégia legítima.', f: 'Tem papel até para quem não gosta de atirar: motorista é herói.' },
     { n: 'Bancada de campo (crafting)', tag: 'Beta', t: 'Crafting leve e diegético: soldar gaiola anti-drone num veículo, improvisar granada de drone, armar mina, camuflar blindado com galhos (reduz detecção térmica).', f: 'A gambiarra criativa da linha de frente, com sabor de Minecraft.' },
     { n: 'Clima e estações', tag: 'Beta', t: 'Rasputitsa (lama): veículos atolam e deixam rastros. Inverno: neve mostra pegadas para drones. Neblina derruba a observação aérea. Estação muda a cada atualização sazonal.', f: 'O mesmo mapa vira outro jogo a cada estação.' },
+    { n: 'Helicópteros e apoio aéreo', tag: 'Beta', t: 'Helicópteros de transporte, carga e evacuação são pilotáveis com o kit Piloto. Voar acima de 150 m aparece no radar e libera a defesa antiaérea inimiga. Aviões chegam como apoio chamado pelo comandante nos mapas de 4×4 km.', f: 'Pilotar rente às árvores com o esquadrão inteiro a bordo: a FOB depende de você chegar.' },
+    { n: 'Veículos civis e reboque', tag: 'Beta', t: 'Carros, vans, ônibus e tratores ficam espalhados pelas cidades e vilas, e qualquer facção pode pegar. O trator reboca veículos abandonados até a base, e eles passam para o seu lado.', f: 'Roubar um blindado inimigo com um trator vira lenda no Discord.' },
     { n: 'Visão térmica e noite', tag: 'Beta', t: 'Drones térmicos e miras térmicas mostram calor (corpos, motores, canos quentes). Contra: mantas anti-térmicas, fumaça, ficar parado em ruínas frias.', f: 'Gato e rato com assinatura de calor.' },
     { n: 'Túneis e subsolo', tag: 'Pós', t: 'Cavar túneis sob a linha inimiga e combater dentro da mina de sal, com escoras de madeira (sem escora, o túnel desaba).', f: 'O DNA de Minecraft no ponto mais tático: a guerra também acontece embaixo da terra.' },
     { n: 'Editor e mods', tag: 'Pós', t: 'Editor de cenários usando o próprio motor voxel; mods em .pck do Godot; workshop da Steam.', f: 'A comunidade estende o jogo por anos.' },
   ];
 
-  // Veículos — size: comprimento × largura × altura reais em metros; ppm: pixels por metro no Blockbench.
-  const VEHICLES = [
-    { id: 'lince', n: 'IFV “Lince”', f: 'uc', cls: 'Blindado de infantaria', phase: 'F3',
-      d: 'O cavalo de batalha da Coalizão: leva um esquadrão inteiro e apoia com canhão automático e mísseis. Torre deslocada, saias laterais e rede de camuflagem enrolada no teto.',
-      crew: '3 + 6', arm: 'Canhão 25 mm, metralhadora coaxial e 2 mísseis “Ferrão”', armor: 'Média (aguenta 14,5 mm de frente)', speed: '60 km/h', cost: 300,
-      weak: 'Teto e motor contra FPV; minas.', size: [6.5, 3.6, 3.4], tex: '256×256', pivots: 'turret, gun, launcher, ramp' },
-    { id: 'coiote', n: 'Pick-up técnica “Coiote”', f: 'uc', cls: 'Veículo leve armado', phase: 'F4',
-      d: 'Rápida e barata: metralhadora pesada com escudo na caçamba e um jammer anti-drone no teto. Chega primeiro, atira e some.',
-      crew: '2 + 3', arm: 'Metralhadora 12,7 mm com escudo', armor: 'Nenhuma (só o escudo da arma)', speed: '110 km/h', cost: 80,
-      weak: 'Qualquer tiro faz estrago; vive de velocidade.', size: [5.3, 1.9, 1.9], tex: '128×128', pivots: 'mg_mount, mg, wheel_*' },
-    { id: 'furao', n: 'Quadriciclo “Furão”', f: 'uc', cls: 'Veículo de equipe de drones', phase: 'F4',
-      d: 'O veículo dos operadores de FPV: caixa com 6 drones no bagageiro, mastro com antena para estender o alcance e lugar para um carona.',
-      crew: '1 + 1', arm: 'Nenhuma (carrega 6 FPVs)', armor: 'Nenhuma', speed: '80 km/h', cost: 40,
-      weak: 'Totalmente exposto; a antena denuncia a posição para a EW.', size: [2.1, 1.2, 1.2], tex: '64×64', pivots: 'handlebar, wheel_*, mast' },
-    { id: 'bruxa', n: 'Hexacóptero “Bruxa”', f: 'uc', cls: 'Drone bombardeiro pesado', phase: 'F4',
-      d: 'Seis motores, câmera térmica e quatro granadas de morteiro. Ataca à noite e é ouvida antes de ser vista: o zumbido grave é a assinatura sonora dela.',
-      crew: '1 operador', arm: '4 granadas de morteiro 82 mm ou 1 mina anti-tanque', armor: 'Nenhuma', speed: '60 km/h · 30 min · 10 km', cost: 150,
-      weak: 'Barulhenta (ouvida a 300 m); EW, espingarda e redes.', size: [1.6, 1.6, 0.6], ppm: 32, tex: '64×64', pivots: 'prop_1…6, bomb_1…4, gimbal' },
-    { id: 'urso', n: 'Tanque “Urso T-7B”', f: 'ru', cls: 'Tanque principal', phase: 'F3',
-      d: 'Ruptura de linha: blindagem reativa, gaiola anti-drone e canhão de 125 mm. Aqui na variante de inverno, com pintura branca lavável e neve acumulada.',
-      crew: '3', arm: 'Canhão 125 mm, coaxial 7,62 e metralhadora 12,7 no teto', armor: 'Pesada + reativa + gaiola', speed: '60 km/h na estrada · 35 no campo', cost: 600,
-      weak: 'Teto e traseira; minas; atola na lama.', size: [9.5, 3.6, 2.2], tex: '256×256', pivots: 'turret, gun, cage (peça separada)' },
-    { id: 'lobo', n: 'BMP “Lobo”', f: 'ru', cls: 'Blindado de infantaria', phase: 'F4',
-      d: 'Baixo e com nariz em cunha: leva 7 soldados, tem canhão automático de 30 mm e um míssil sobre a torre. Rápido, anfíbio e frágil.',
-      crew: '3 + 7', arm: 'Canhão 30 mm, míssil anti-tanque e coaxial', armor: 'Leve (só 12,7 mm de frente)', speed: '65 km/h · anfíbio', cost: 250,
-      weak: 'Blindagem fina: um FPV no lugar certo resolve.', size: [6.7, 3.2, 2.1], tex: '256×256', pivots: 'turret, gun, atgm, door_l, door_r' },
-    { id: 'tartaruga', n: 'MT-LB “Tartaruga”', f: 'ru', cls: 'Transporte com casco anti-drone', phase: 'F5',
-      d: 'A resposta da Legião ao enxame: um transporte coberto por um casco de chapas soldadas. Aguenta vários FPVs, mas o motorista quase não enxerga e cada impacto arranca uma chapa.',
-      crew: '2 + 10', arm: 'Metralhadora 7,62 pela fresta da frente', armor: 'Leve + casco (absorve 3–4 FPVs)', speed: '35 km/h com o casco', cost: 220,
-      weak: 'Lento e meio cego; minas; o casco cai aos pedaços.', size: [6.5, 2.9, 3.2], tex: '256×256', pivots: 'shell_01…12 (chapas destrutíveis)' },
-    { id: 'prego', n: 'Obuseiro “Prego”', f: 'ru', cls: 'Artilharia autopropulsada', phase: 'F4',
-      d: 'Obuseiro de 122 mm sobre lagartas: dispara nas coordenadas que o observador manda e troca de posição antes da contra-bateria chegar.',
-      crew: '4', arm: 'Obuseiro 122 mm (alcance 15 km)', armor: 'Leve', speed: '60 km/h · anfíbio', cost: 450,
-      weak: 'Contra-bateria e drones de observação.', size: [7.3, 2.9, 2.7], tex: '256×256', pivots: 'turret, gun (elevação 0–70°), spade' },
-    { id: 'gafanhoto', n: 'Moto “Gafanhoto”', f: 'ru', cls: 'Assalto rápido', phase: 'F5',
-      d: 'Duplas de moto cruzam a terra de ninguém rápido demais para os drones mirarem. Barata, barulhenta e sem proteção nenhuma.',
-      crew: '1 + 1', arm: 'As dos próprios soldados', armor: 'Nenhuma', speed: '120 km/h', cost: 30,
-      weak: 'Tudo; depende de velocidade e surpresa.', size: [2.1, 0.8, 1.2], tex: '64×64', pivots: 'fork, wheel_f, wheel_r' },
-    { id: 'mula', n: 'Caminhão “Mula”', f: 'both', cls: 'Logística 6×6', phase: 'F5',
-      d: 'Sem ele não há guerra: leva suprimentos do QG às FOBs e pode montar uma FOB nova. As duas facções usam, cada uma com as próprias fitas.',
-      crew: '1 + 12 (ou carga)', arm: 'Nenhuma', armor: 'Nenhuma', speed: '85 km/h · leva 1.000 suprimentos', cost: 150,
-      weak: 'Alvo prioritário de drones; depende de pontes e estradas.', size: [7.4, 2.5, 2.9], tex: '256×256', pivots: 'wheel_*, tarp_side (enrola)' },
-  ];
+  const VEHICLES = window.DR_VEHICLES || [];
 
   // Cronograma — semana 0 = segunda, 12/10/2026
   const W0 = new Date(2026, 9, 12);
   const PHASES = [
     { id: 'F0', n: 'Pré-produção', s: 0, w: 4, c: '#8a9480',
-      goal: 'Ferramentas, regras do jogo e pipeline Blockbench → Godot funcionando.',
-      out: ['Repositório do jogo + CLAUDE.md', 'GDD v0.2 (a partir deste site)', 'Pack de blocos v1 + soldado base', 'Primeiro bloco cavado no Godot'],
+      goal: 'Ferramentas, regras do jogo e a fábrica de modelos voxel (script → Godot) funcionando.',
+      out: ['Repositório do jogo + CLAUDE.md', 'GDD v0.2 (a partir deste site)', 'Fábrica de modelos + blocos v1 + soldado base', 'Primeiro bloco cavado no Godot'],
       cut: 'Nada — fase curta e obrigatória.' },
     { id: 'F1', n: 'Protótipo do núcleo', s: 4, w: 8, c: '#ffb000',
       goal: 'Diversão em solo: andar, atirar, cavar e explodir num mundo de blocos.',
@@ -110,7 +70,7 @@
       cut: 'Logística completa → só caixas de suprimento no Alpha.' },
     { id: 'F5', n: 'Conteúdo e Beta', s: 44, w: 12, c: '#7b6bd6',
       goal: 'Mapa completo 4×4 km, demo pública e Steam Next Fest.',
-      out: ['Mapa Vorsk completo', 'Logística e FOBs', 'Blackout + Patrulha', 'Demo do Next Fest', 'Wishlists > 20 mil (meta)'],
+      out: ['Mapa Vorsk completo', 'Logística e FOBs', 'Helicópteros de tropa e de carga', 'Blackout + Patrulha', 'Demo do Next Fest', 'Wishlists > 20 mil (meta)'],
       cut: 'Clima sazonal → só lama no Beta.' },
     { id: 'F6', n: 'Polimento → Early Access', s: 56, w: 17, c: '#3d6fd6',
       goal: 'Performance, onboarding e lançamento em Acesso Antecipado na Steam.',
@@ -120,12 +80,13 @@
 
   const STREAMS = [
     { n: 'Código (IA)', who: 'ia', bars: [[0, 4, 'Estrutura'], [4, 12, 'Voxel + FPS + destruição'], [12, 20, 'Rede'], [20, 32, 'Vertical slice'], [32, 44, 'Sistemas Alpha'], [44, 56, 'Conteúdo + otimização'], [56, 73, 'Polimento']] },
-    { n: 'Modelos (você)', who: 'voce', bars: [[0, 4, 'Blocos + soldado'], [4, 12, 'Armas, uniformes, props'], [12, 22, 'Veículos I'], [22, 34, 'Mapa: vila + cidade'], [34, 46, 'Veículos II + drones'], [46, 60, 'Sazonais + cosméticos'], [60, 73, 'LODs + polimento']] },
+    { n: 'Modelos voxel (IA)', who: 'ia', bars: [[0, 4, 'Fábrica + blocos + soldado'], [4, 12, 'Armas, uniformes, props'], [12, 22, 'Veículos I'], [22, 34, 'Mapa: vila + cidade'], [34, 46, 'Veículos II + drones'], [46, 60, 'Helicópteros + civis'], [60, 73, 'Aviões + LODs']] },
+    { n: 'Direção de arte', who: 'voce', bars: [[0, 4, 'Estilo + paleta'], [4, 56, 'Aprovar as prévias toda semana'], [56, 73, 'Polimento visual']] },
     { n: 'Game design', who: 'voce', bars: [[0, 6, 'GDD + regras'], [6, 32, 'Kits, armas, economia'], [32, 73, 'Balanceamento por dados']] },
     { n: 'Rede & servidores', who: 'ia', bars: [[12, 20, 'Fundação'], [32, 44, 'Escala 64p'], [56, 73, 'Hospedagem + anti-cheat']] },
     { n: 'Áudio', who: 'voce', bars: [[16, 32, 'SFX base'], [32, 56, 'Ambiente + rádio'], [56, 73, 'Mix final + música']] },
     { n: 'Comunidade', who: 'voce', bars: [[8, 40, 'Devlogs + Discord'], [40, 56, 'Página Steam + wishlists'], [56, 73, 'Trailer + imprensa']] },
-    { n: 'Playtests', who: 'ia', bars: [[12, 32, 'Internos'], [32, 44, 'Alpha fechado'], [48, 56, 'Beta / Next Fest'], [56, 73, 'Testes de carga']] },
+    { n: 'Playtests', who: 'voce', bars: [[12, 32, 'Internos'], [32, 44, 'Alpha fechado'], [48, 56, 'Beta / Next Fest'], [56, 73, 'Testes de carga']] },
   ];
 
   const MILESTONES = [
@@ -139,40 +100,41 @@
   ];
 
   const SPRINTS = [
-    { ia: 'Estrutura do projeto Godot, pastas, CLAUDE.md, CI de export (GitHub Actions).', voce: 'Instalar Godot + Blockbench. Texturas 16×16: grama, terra, pedra, areia, madeira, tábua, tijolo, concreto.', out: 'Projeto abre e roda uma cena vazia.' },
-    { ia: 'Controlador FPS milsim: posturas, inclinar, correr com stamina, peso.', voce: 'Soldado base no Blockbench (rig com ossos no padrão).', out: 'Andar num plano cinza com o seu soldado.' },
-    { ia: 'Terreno voxel em chunks 16³ com greedy meshing e atlas.', voce: 'Girassol, trigo, árvore, arbusto. Atlas de blocos v1.', out: 'Andar na estepe de blocos.' },
-    { ia: 'Quebrar/colocar blocos (raycast), salvar/carregar chunks modificados.', voce: 'Pá de sapador, saco de areia, caixa de munição.', out: 'M0 — primeiro bloco cavado.' },
-    { ia: 'Armas: projétil com balística, recuo, mira, recarga.', voce: 'Fuzil AR (Coalizão) + fuzil AK (Legião), mundo + 1ª pessoa.', out: 'Atirar em alvos de bloco.' },
-    { ia: 'Dano por material + explosões com queda + detritos (pooling).', voce: 'Granada, lança-foguetes, sprites de explosão/fumaça.', out: 'Explodir paredes.' },
-    { ia: 'Integridade estrutural (desabamento por grupo).', voce: 'Casa de vila modular (paredes, janelas, telhado).', out: 'Derrubar uma casa.' },
-    { ia: 'Ferramenta de trincheira: cavar, revestir, sacos de areia, preview fantasma.', voce: 'Toras, tábuas, arame farpado, ouriço tcheco.', out: 'Cavar 10 m de trincheira em 2 min.' },
-    { ia: 'Vida, sangramento, torniquete, supressão.', voce: 'Uniformes das 2 facções, capacetes, coletes, fitas.', out: 'Soldados das 2 facções no jogo.' },
-    { ia: 'Drone FPV: física, controle, bateria, feed com ruído, explosão.', voce: 'Drone FPV + ogiva + óculos FPV.', out: 'Kamikaze num alvo.' },
-    { ia: 'Bots simples (patrulha, cobertura, atirar) + HUD mínimo.', voce: 'Animações: andar, correr, mirar, cavar, rastejar, morrer.', out: 'Combate contra bots.' },
-    { ia: 'Integração, correção de bugs, perfilamento.', voce: 'Gravar GIFs/vídeo do devlog #1; playtest com amigos.', out: 'M1 — protótipo solo jogável.' },
+    { ia: 'Estrutura do projeto Godot, pastas, CLAUDE.md, CI de export (GitHub Actions).', mdl: 'Fábrica de modelos voxel (script → .vox/.glb), paleta e blocos: grama, terra, pedra, areia, madeira, tábua, tijolo, concreto.', voce: 'Instalar Godot e MagicaVoxel; aprovar a paleta e o estilo dos blocos.', out: 'Projeto abre e roda uma cena vazia.' },
+    { ia: 'Controlador FPS milsim: posturas, inclinar, correr com stamina, peso.', mdl: 'Soldado base em partes rígidas, no padrão do guia de estilo.', voce: 'Comparar o soldado com as concept arts e pedir ajustes.', out: 'Andar num plano cinza com o soldado.' },
+    { ia: 'Terreno voxel em chunks 16³ com greedy meshing e atlas.', mdl: 'Girassol, trigo, árvore, arbusto; atlas de blocos v1.', voce: 'Andar na estepe e dar notas de cor e clima.', out: 'Andar na estepe de blocos.' },
+    { ia: 'Quebrar/colocar blocos (raycast), salvar/carregar chunks modificados.', mdl: 'Pá de sapador, saco de areia, caixa de munição.', voce: 'Cavar e construir por 30 min e listar o que irrita.', out: 'M0 — primeiro bloco cavado.' },
+    { ia: 'Armas: projétil com balística, recuo, mira, recarga.', mdl: 'Fuzil AR (Coalizão) e fuzil AK (Legião), mundo + 1ª pessoa.', voce: 'Definir a sensação das armas: recuo, som, cadência.', out: 'Atirar em alvos de bloco.' },
+    { ia: 'Dano por material + explosões com queda + detritos (pooling).', mdl: 'Granada, lança-foguetes, efeitos de explosão e fumaça.', voce: 'Ajustar o HP dos materiais até explodir parede ficar gostoso.', out: 'Explodir paredes.' },
+    { ia: 'Integridade estrutural (desabamento por grupo).', mdl: 'Casa de vila modular (paredes, janelas, telhado).', voce: 'Derrubar casas e apontar desabamentos estranhos.', out: 'Derrubar uma casa.' },
+    { ia: 'Ferramenta de trincheira: cavar, revestir, sacos de areia, preview fantasma.', mdl: 'Toras, tábuas, arame farpado, ouriço tcheco.', voce: 'Cronometrar: 10 m de trincheira tem que levar uns 2 min.', out: 'Cavar 10 m de trincheira em 2 min.' },
+    { ia: 'Vida, sangramento, torniquete, supressão.', mdl: 'Uniformes das 2 facções, capacetes, coletes, fitas.', voce: 'Aprovar as silhuetas: dá para diferenciar as facções de longe?', out: 'Soldados das 2 facções no jogo.' },
+    { ia: 'Drone FPV: física, controle, bateria, feed com ruído, explosão.', mdl: 'Drone FPV + ogiva + óculos.', voce: 'Pilotar o FPV e dar notas de controle.', out: 'Kamikaze num alvo.' },
+    { ia: 'Bots simples (patrulha, cobertura, atirar) + HUD mínimo.', mdl: 'Animações por partes: andar, correr, mirar, cavar, rastejar, morrer.', voce: 'Jogar contra os bots e anotar o que não diverte.', out: 'Combate contra bots.' },
+    { ia: 'Integração, correção de bugs, perfilamento.', mdl: 'LODs e revisão de todos os modelos do protótipo.', voce: 'Gravar o devlog #1 e fazer playtest com amigos.', out: 'M1 — protótipo solo jogável.' },
   ];
+
 
   const ASSETS = [
     { g: 'F0 — Fundação', items: [
-      ['blk_pack_v1', 'Pack de blocos v1 (grama, terra, pedra, areia, madeira, tábua, tijolo, concreto, asfalto, aço)', '16×16 px cada'],
-      ['chr_soldier_base', 'Soldado base com rig (padrão de ossos)', '≈29 px de altura · textura 64×64'],
+      ['blk_pack_v1', 'Pack de blocos v1 (grama, terra, pedra, areia, madeira, tábua, tijolo, concreto, asfalto, aço)', '16×16 voxels de face'],
+      ['chr_soldier_base', 'Soldado base em partes rígidas (cabeça, tronco, braços, pernas)', '≈29 voxels de altura'],
     ] },
     { g: 'F1 — Protótipo', items: [
-      ['wpn_rifle_ar', 'Fuzil estilo AR (Coalizão) — mundo + 1ª pessoa', '1ª pessoa a 32 px/m'],
+      ['wpn_rifle_ar', 'Fuzil estilo AR (Coalizão) — mundo + 1ª pessoa', '1ª pessoa a 32 voxels/m'],
       ['wpn_rifle_ak', 'Fuzil estilo AK (Legião) — mundo + 1ª pessoa', 'carregador cor ameixa'],
       ['wpn_explosives', 'Granada, lança-foguetes, ogiva', 'pivô no grip'],
       ['tool_shovel', 'Pá de sapador', 'animação dig_loop'],
       ['chr_uniforms', 'Uniformes Coalizão (manchas) e Legião (digital) + capacetes + coletes + fitas', '5–6 tons por camuflagem'],
       ['prop_trench', 'Saco de areia, tora, tábua de revestimento, arame farpado, ouriço tcheco', 'meio-bloco quando fizer sentido'],
-      ['drn_fpv', 'Drone FPV + ogiva + óculos', 'modelo a 32 px/m'],
+      ['drn_fpv', 'Drone FPV + ogiva + óculos', '32 voxels/m'],
       ['bld_village', 'Casa de vila modular (paredes, janelas, portas, telhado, chaminé)', 'peças de 1 bloco'],
       ['veg_pack', 'Girassol, trigo, bétula, álamo, arbusto', 'variações de altura'],
-      ['anim_core', 'Animações: idle, walk, run, crouch, prone, aim, reload, dig, throw, death', 'Blockbench → glTF'],
+      ['anim_core', 'Animações: idle, walk, run, crouch, prone, aim, reload, dig, throw, death', 'animação por partes'],
     ] },
     { g: 'F2–F3 — Vertical slice', items: [
       ['wpn_support', 'Metralhadora, DMR, pistola, espingarda anti-drone', ''],
-      ['veh_tank_urso', 'Tanque “Urso T-7B” + gaiola anti-drone (peça separada)', 'textura 256×256 · pivôs turret/gun'],
+      ['veh_tank_urso', 'Tanque “Urso T-7B” + gaiola anti-drone (peça separada)', 'pivôs turret/gun'],
       ['veh_ifv_lince', 'IFV “Lince” (Coalizão)', 'rodas/esteiras nomeadas'],
       ['veh_truck', 'Caminhão “Mula” + pick-up técnica “Coiote”', 'rodas nomeadas wheel_*'],
       ['drn_recon', 'Drone de observação + jammer portátil + antena EW', ''],
@@ -187,6 +149,16 @@
       ['cosm_pack', 'Cosméticos: patches, capacetes alternativos, pinturas', 'nada que dê vantagem'],
       ['ui_icons', 'Ícones de UI, marcadores do mapa, logos das facções', 'SVG/PNG pixel'],
       ['lod_pass', 'Versões LOD (> 150 m) dos modelos principais', ''],
+      ['veh_blindados2', 'Tanque “Bisão” e blindados leves “Tatu” e “Javali”', ''],
+      ['veh_apoio', 'Apoio: “Martelo”, “Granizo”, “Guepardo”, “Ouriço” e “Toupeira”', 'pivôs de lançadores, radares e braço'],
+      ['veh_civis', 'Civis: “Tijolinho”, “Pão de Forma”, “Sardinha”, “Teimoso”, “Socorro” e “Cabrito”', 'portas e capôs separados'],
+      ['veh_lontra', 'Barco “Lontra”', 'motor de popa giratório'],
+      ['veh_helis', 'Helicópteros “Libélula”, “Pelicano” e “Anjo”', 'pivôs rotor_main e rotor_tail'],
+    ] },
+    { g: 'Pós-lançamento', items: [
+      ['veh_eng', 'Lança-pontes “Castor” e desminagem “Serpente”', ''],
+      ['veh_ataque', 'Helicópteros de ataque “Marimbondo” e “Jacaré”', ''],
+      ['veh_avioes', 'Aviões “Gralha”, “Falcão”, “Urubu”, “Pardal”, “Abelha” e “Cegonha”', 'trem de pouso, flaps e hélices separados'],
     ] },
   ];
 
@@ -198,11 +170,11 @@ Você é o engenheiro principal do DARKRIOT, um milsim tático (estilo Arma/Squa
 - Linguagem: GDScript tipado para gameplay. C++ (GDExtension) apenas para hot paths (meshing, destruição) quando o profiler pedir.
 - Escala: 1 bloco = 1 m. Chunks 16×16×16. Y para cima.
 - Rede: servidor autoritativo desde o dia 1. Nenhuma lógica de gameplay confia no cliente.
-- Pastas: res://core (voxel, rede), res://gameplay (armas, drones, construção), res://ui, res://assets (modelos .glb do Blockbench), res://sandbox (cenas de teste), res://tests (GUT).
+- Pastas: res://core (voxel, rede), res://gameplay (armas, drones, construção), res://ui, res://assets (modelos .glb exportados de tools/models), res://sandbox (cenas de teste), res://tests (GUT).
 - Convenções: snake_case nos arquivos, PascalCase no class_name, sinais no passado (block_destroyed).
 - Toda feature: (1) plano curto antes de codar, (2) testes GUT, (3) cena demo em res://sandbox, (4) entrada em docs/CHANGELOG.md.
-- NUNCA altere arquivos em res://assets sem eu pedir: eu (o orquestrador) crio os modelos.
-- Se faltar um modelo, use um placeholder (caixa colorida) e me avise numa lista "ASSETS PENDENTES".` },
+- Modelos voxel: cada modelo é um script em tools/models/ (a fonte). O exportador gera .vox e .glb em res://assets/models/. Nunca edite os arquivos exportados: mude o script e reexporte.
+- Todo modelo segue docs/estilo-voxel.md (16 voxels por metro, paleta fixa, partes e pivôs nomeados) e gera uma prévia em docs/previews/ para eu aprovar antes de entrar no jogo.` },
     { n: '01 · Terreno voxel em chunks', d: 'Semana 3. O coração do jogo.',
       p: `Implemente o terreno voxel em res://core/voxel:
 - VoxelWorld (Node3D) gerencia chunks 16×16×16 ao redor do jogador (raio configurável), gerando e remeshando em threads (WorkerThreadPool).
@@ -226,7 +198,7 @@ Aceite: testes GUT do falloff e do desabamento de uma ponte simples; benchmark n
 - Cada 2 blocos de terra cavados = 1 saco de areia no inventário (máx. 20).
 - Colocar saco de areia: preview fantasma (verde = válido / vermelho = inválido), encaixe na grade, rotação com R.
 - "Revestir" uma parede de trincheira com tábuas custa suprimento e dá +50% de HP ao bloco.
-- Use a animação dig_loop de res://assets/characters/soldier.glb; se não existir, crie um placeholder e me avise.
+- Use a animação dig_loop do soldado; se ainda não existir, crie a animação por partes (o soldado é feito de partes rígidas) e me mostre uma prévia.
 Aceite: cena sandbox onde dá para cavar 10 m de trincheira e cobrir com sacos.` },
     { n: '04 · Drone FPV + guerra eletrônica', d: 'Semana 10.',
       p: `Crie o drone FPV kamikaze (res://gameplay/drones/fpv_drone.gd):
@@ -245,22 +217,32 @@ Aceite: cena sandbox com tanque-alvo e um jammer; OSD com bateria, altitude, vel
 - Lobby simples por IP (depois trocamos por Steam via GodotSteam).
 Aceite: 2 clientes + servidor locais; cavar num cliente aparece no outro; script tools/run_local_match.sh.
 Explique os trade-offs antes de implementar.` },
-    { n: '06 · Pipeline Blockbench → Godot', d: 'Semana 1–2. Deixa seus modelos entrarem sem retrabalho.',
-      p: `Crie o pipeline de importação dos meus modelos do Blockbench:
-- Eu solto os .glb em res://assets/incoming/.
-- EditorScenePostImport (res://tools/import/blockbench_post_import.gd): força filtro Nearest e desliga mipmaps, gera colisão simplificada (caixas) para props e valida os nomes dos ossos (hips, spine, chest, head, arm_l_upper...).
-- Script de editor que gera docs/assets_report.md com problemas: textura que não é potência de 2, ossos faltando, triângulos acima do limite, pivôs fora do lugar.
-Aceite: importar soldier.glb e rifle_ak.glb sem nenhum ajuste manual.` },
+    { n: '06 · Fábrica de modelos voxel', d: 'Semana 1. Daqui em diante a IA gera qualquer veículo, prop ou personagem a partir de código.',
+      p: `Crie a fábrica de modelos voxel em tools/models/:
+- Um modelo = um script que preenche uma grade de voxels com cores da paleta fixa (docs/paleta.png, 256 cores). Funções de apoio: box, carve, line, sphere, wheel, track, mirror, camo.
+- Exportadores: .vox (MagicaVoxel, para eu abrir e conferir) e .glb com greedy meshing e cor por vértice (para o Godot). Cada parte móvel vira um nó separado com o pivô certo (turret, gun, wheel_l_01, rotor_main...).
+- LOD automático: versão com voxels 2× maiores para mais de 150 m.
+- Prévia: um PNG isométrico de cada modelo em docs/previews/ para eu aprovar.
+- Um comando só: tools/models/build.sh [nome] exporta tudo ou só um modelo.
+Aceite: gerar veh_tank_urso (gaiola como peça separada) e chr_soldier_base e importar no Godot sem nenhum ajuste manual.` },
     { n: '07 · Revisor / QA', d: 'Use depois de cada feature, antes do merge.',
       p: `Aja como revisor sênior do DARKRIOT. Revise o diff da branch atual:
 1) bugs e casos de borda; 2) rede: algo confia no cliente?; 3) performance: alocações por frame, loops pesados em chunks; 4) testes que faltam.
 Liste por ordem de gravidade com arquivo:linha e proponha a correção. Não altere nada ainda.` },
-    { n: '08 · Referência visual (IA de imagem)', d: 'Para gerar referências antes de modelar.',
+    { n: '08 · Gerar um modelo voxel', d: 'Use para cada veículo, prop ou personagem novo, com a ficha do site.',
+      p: `Gere o modelo voxel do Tanque “Urso T-7B” (veh_tank_urso) seguindo docs/estilo-voxel.md:
+- Escala real: 9,5 × 3,6 × 2,2 m → 152 × 58 × 35 voxels (16 por metro).
+- Referência: a concept art e a ficha do site de brainstorm (blindagem reativa, gaiola anti-drone, tora de desatolamento atrás, tambores extras, fita branca de identificação).
+- Peças separadas com pivô: turret, gun, cage (destrutível em 4 partes), hatch.
+- Paleta: camuflagem da Legião (5 tons) + metal escuro das lagartas.
+- Exporte .vox e .glb, gere a prévia e me mostre lado a lado com a concept art. Não coloque no jogo antes de eu aprovar a prévia.` },
+    { n: '09 · Referência visual (IA de imagem)', d: 'Para explorar um visual antes de pedir o modelo.',
       p: `Voxel art, isometric diorama, Minecraft-style blocky military scene, eastern european steppe, sunflower field, zigzag trench with sandbags and wooden revetments, soldiers with yellow and blue armband tape, overcast autumn light, muddy ground, 16x16 pixel textures, tilt-shift, cinematic --ar 3:2` },
   ];
 
   const DECISIONS = [
-    ['Escala do bloco', '1 bloco = 1 m (padrão Minecraft, mais leve, pipeline Blockbench direto). Alternativa: 0,5 m — trincheiras e destruição mais finas, mas 8× mais voxels.', '1 m'],
+    ['Quem faz os modelos', 'A IA gera todos os modelos voxel por código: veículos, props, personagens e blocos. Você dirige e aprova pelas prévias; retoques à mão no MagicaVoxel quando quiser.', 'IA + sua aprovação'],
+    ['Escala do bloco', '1 bloco = 1 m (padrão Minecraft, mais leve). Alternativa: 0,5 m — trincheiras e destruição mais finas, mas 8× mais voxels.', '1 m'],
     ['Nomes das facções', '“Coalizão Kalyna” × “Legião Boreal”, num país fictício. Mantém o DNA UC × RU sem usar bandeiras e unidades reais.', 'Fictícios'],
     ['Câmera', 'Só 1ª pessoa a pé (milsim). 3ª pessoa opcional dentro de veículos.', '1ª pessoa'],
     ['Tamanho da partida', '32×32 no Early Access; 50×50 quando a rede aguentar.', '32×32'],
@@ -275,6 +257,7 @@ Liste por ordem de gravidade com arquivo:linha e proponha a correção. Não alt
     ['Performance com 64 jogadores + destruição', 'Núcleo em C++ (GDExtension), limite de detritos, LOD de chunks, perfilar toda semana.'],
     ['Tema sensível (guerra real)', 'Facções e lugares fictícios, sem crimes de guerra; foco na tática e no soldado comum.'],
     ['Código de IA virar “espaguete”', 'CLAUDE.md, testes obrigatórios, prompt de revisão, PR pequeno, você aprova tudo.'],
+    ['Modelos da IA com estilo desigual', 'Guia de estilo e paleta fixos, funções de modelagem compartilhadas e prévia obrigatória para você aprovar antes de entrar no jogo.'],
     ['Esgotamento (dev solo)', 'Semanas de folga embutidas, devlog curto a cada 2 semanas, comunidade cedo.'],
   ];
 
@@ -301,30 +284,61 @@ Liste por ordem de gravidade com arquivo:linha e proponha a correção. Não alt
     const m = (x) => String(x).replace('.', ',');
     VEHICLES.forEach((v) => {
       const ppm = v.ppm || 16, px = v.size.map((x) => Math.round(x * ppm));
+      const rotor = v.rotor ? ` · rotor Ø ${m(v.rotor)} m → ${Math.round(v.rotor * ppm)} voxels` : '';
+      const cost = typeof v.cost === 'number' ? `${v.cost} suprimentos` : v.cost;
       const c = el('article', 'card veh');
-      c.id = 'veh-' + v.id; c.dataset.f = v.f;
+      c.id = 'veh-' + v.id; c.dataset.f = v.f; c.dataset.t = v.t;
       c.innerHTML = `<img src="assets/img/veh-${v.id}.webp" width="1200" height="800" loading="lazy" decoding="async" alt="Concept art voxel: ${v.n}">
         <div class="veh-body">
           <header><h3>${v.n}</h3><span class="fac fac-${v.f}">${FAC[v.f]}</span></header>
-          <p class="cls">${v.cls} · jogável na ${v.phase}</p>
+          <p class="cls">${v.cls} · ${v.phase === 'Pós' ? 'pós-lançamento' : 'jogável na ' + v.phase}</p>
           <p>${v.d}</p>
-          <dl class="vspecs">
-            <div><dt>Tripulação</dt><dd>${v.crew}</dd></div>
-            <div><dt>Custo</dt><dd>${v.cost} suprimentos</dd></div>
-            <div class="wide"><dt>Armas</dt><dd>${v.arm}</dd></div>
-            <div><dt>Blindagem</dt><dd>${v.armor}</dd></div>
-            <div><dt>Velocidade</dt><dd>${v.speed}</dd></div>
-          </dl>
-          <p class="weak"><b>Ponto fraco:</b> ${v.weak}</p>
-          <p class="mdl"><b>Para modelar:</b> ${v.size.map(m).join(' × ')} m → ${px.join(' × ')} px (${ppm} px/m) · textura ${v.tex} · pivôs: ${v.pivots}</p>
+          <details class="vdet"><summary>Ficha técnica</summary>
+            <dl class="vspecs">
+              <div><dt>Tripulação</dt><dd>${v.crew}</dd></div>
+              <div><dt>Custo</dt><dd>${cost}</dd></div>
+              <div class="wide"><dt>Armas</dt><dd>${v.arm}</dd></div>
+              <div><dt>Blindagem</dt><dd>${v.armor}</dd></div>
+              <div><dt>Velocidade</dt><dd>${v.speed}</dd></div>
+            </dl>
+            <p class="weak"><b>Ponto fraco:</b> ${v.weak}</p>
+            <p class="mdl"><b>Para a IA modelar:</b> ${v.size.map(m).join(' × ')} m → ${px.join(' × ')} voxels (${ppm} por metro)${rotor} · peças móveis: ${v.pivots}</p>
+          </details>
         </div>`;
       box.appendChild(c);
     });
-    $$('#veh-filter button').forEach((b) => b.addEventListener('click', () => {
-      $$('#veh-filter button').forEach((x) => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
-      const f = b.dataset.f;
-      $$('#veh-grid .veh').forEach((c) => { c.hidden = f !== 'all' && c.dataset.f !== f && c.dataset.f !== 'both'; });
-    }));
+    // contagem por tipo no cabeçalho dos filtros
+    $$('#veh-type button').forEach((b) => {
+      const n = b.dataset.t === 'all' ? VEHICLES.length : VEHICLES.filter((v) => v.t === b.dataset.t).length;
+      b.insertAdjacentHTML('beforeend', ` <small>${n}</small>`);
+    });
+    const state = { t: 'all', f: 'all' };
+    const apply = () => {
+      let shown = 0;
+      $$('#veh-grid .veh').forEach((c) => {
+        const okT = state.t === 'all' || c.dataset.t === state.t;
+        const okF = state.f === 'all' || c.dataset.f === state.f || (state.f !== 'both' && c.dataset.f === 'both');
+        c.hidden = !(okT && okF);
+        if (!c.hidden) shown++;
+      });
+      $('#veh-count').textContent = `${shown} de ${VEHICLES.length} veículos`;
+    };
+    for (const [group, key] of [['#veh-type', 't'], ['#veh-fac', 'f']]) {
+      $$(group + ' button').forEach((b) => b.addEventListener('click', () => {
+        $$(group + ' button').forEach((x) => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+        state[key] = b.dataset[key];
+        apply();
+      }));
+    }
+    apply();
+  }
+
+  function renderFactionVehicles() {
+    const shared = VEHICLES.filter((v) => v.f === 'both').length;
+    $$('ul[data-veh]').forEach((ul) => {
+      VEHICLES.filter((v) => v.f === ul.dataset.veh).forEach((v) => ul.appendChild(el('li', '', `<a href="#veh-${v.id}">${v.n}</a>`)));
+      ul.appendChild(el('li', 'more', `<a href="#veiculos">+ ${shared} compartilhados</a>`));
+    });
   }
 
   function renderMechs() {
@@ -410,7 +424,8 @@ Liste por ordem de gravidade com arquivo:linha e proponha a correção. Não alt
       const c = el('article', 'sprint' + (i === 3 || i === 11 ? ' ms' : ''));
       c.innerHTML = `<header><b>S${String(i + 1).padStart(2, '0')}</b><time>${fmt(a)} – ${fmt(z)}</time><span>${i < 4 ? 'F0' : 'F1'}</span></header>
         <div class="lane ia"><small>IA · código</small><p>${s.ia}</p></div>
-        <div class="lane voce"><small>Você · modelos</small><p>${s.voce}</p></div>
+        <div class="lane mdl"><small>IA · modelos voxel</small><p>${s.mdl}</p></div>
+        <div class="lane voce"><small>Você · direção</small><p>${s.voce}</p></div>
         <div class="lane out"><small>Entregável</small><p>${s.out}</p></div>`;
       sp.appendChild(c);
     });
@@ -497,7 +512,7 @@ Liste por ordem de gravidade com arquivo:linha e proponha a correção. Não alt
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    renderVehicles(); renderModes(); renderMechs(); renderGantt(); renderAssets(); renderPrompts(); renderDecisions();
+    renderVehicles(); renderFactionVehicles(); renderModes(); renderMechs(); renderGantt(); renderAssets(); renderPrompts(); renderDecisions();
     nav();
   });
 })();

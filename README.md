@@ -16,12 +16,12 @@ Site de brainstorm do **DARKRIOT**: um milsim tático no estilo *Arma*, inspirad
 2. **Engine**: por que Godot 4, comparativo com Unity e Unreal, stack e arquitetura de rede
 3. **Facções e mundo**: Coalizão Kalyna × Legião Boreal, kits, veículos e o mapa tático procedural do Oblast de Vorsk
 4. **Concept arts**: geradas por um mini motor voxel isométrico escrito em JavaScript (`assets/js/voxel.js`)
-5. **Veículos**: concept art e ficha dos 10 veículos (função, armas, blindagem, custo, ponto fraco e medidas reais para modelar)
+5. **Veículos**: concept art e ficha de 38 veículos — 26 terrestres e aquáticos (6 civis), 11 aeronaves e o drone pesado — com função, armas, blindagem, custo, ponto fraco e medidas para a IA modelar
 6. **Modos de jogo**: Linha de Frente, Fortaleza, Blackout, Caçada de Drones, Patrulha e Campanha Dinâmica
-7. **Mecânicas**: 15 sistemas com filtro por fase (MVP, Alpha, Beta, Pós)
+7. **Mecânicas**: 17 sistemas com filtro por fase (MVP, Alpha, Beta, Pós)
 8. **GIFs de gameplay**: 6 loops animados, também em `.gif` para baixar
 9. **Cronograma**: Gantt de out/2026 até o Early Access (mar/2028), marcos, fases e as 12 primeiras semanas sprint a sprint
-10. **Orquestração**: fluxo de trabalho com IA, guia do modelador (Blockbench), checklist de modelos, biblioteca de prompts, decisões e riscos
+10. **Orquestração**: fluxo de trabalho com IA (a IA faz o código e os modelos voxel; você dirige e aprova), guia de estilo dos modelos, checklist, biblioteca de prompts, decisões e riscos
 
 ## Ativar o GitHub Pages
 
@@ -51,7 +51,10 @@ assets/img/             concept arts, hero, mapa e animações (.webp) pré-rend
 assets/gifs/            as animações em .gif, para baixar
 assets/js/voxel.js      mini motor voxel isométrico (canvas 2D)
 assets/js/models.js     modelos voxel: soldados, tanque, drone FPV, casa, girassol…
-assets/js/vehicles.js   os 10 veículos e as cenas das concept arts deles
+assets/js/vehicles.js   veículos da 1ª leva, helicópteros de transporte e ferramentas de modelagem
+assets/js/vehicles-ground.js  blindados, apoio, engenharia, barco e veículos civis
+assets/js/vehicles-air.js     helicópteros de ataque, evacuação e aviões
+assets/js/data-vehicles.js    ficha de todos os veículos (usada pelo site e pela exportação)
 assets/js/art.js        concept arts + mapa tático procedural
 assets/js/anims.js      animações de gameplay (funções puras do tempo → loops perfeitos)
 tools/render/           exporta as artes e animações do código para assets/img e assets/gifs
@@ -63,7 +66,7 @@ As artes e animações são **geradas pelo código** de `voxel.js`, `models.js`,
 
 ## Regenerar as artes e animações
 
-Depois de editar `assets/js/art.js`, `models.js`, `vehicles.js` ou `anims.js`:
+Depois de editar `assets/js/art.js`, `models.js`, `vehicles*.js`, `data-vehicles.js` ou `anims.js`:
 
 ```bash
 npm i playwright            # uma vez
