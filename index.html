@@ -7,7 +7,7 @@
 <meta name="description" content="Brainstorm do DARKRIOT: milsim tático estilo Arma (UC × RU, facções fictícias) num mundo de blocos destrutível estilo Minecraft. Engine, concept arts, GIFs de gameplay, mecânicas e cronograma.">
 <meta property="og:title" content="DARKRIOT — Brainstorm">
 <meta property="og:description" content="Milsim tático num mundo de blocos destrutível. Engine, concept arts, mecânicas e cronograma.">
-<meta property="og:image" content="assets/gifs/destroy.gif">
+<meta property="og:image" content="assets/img/art-trench.webp">
 <meta name="theme-color" content="#0a0c0b">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230a0c0b'/%3E%3Crect x='2' y='2' width='5' height='12' fill='%23ffb000'/%3E%3Crect x='9' y='2' width='5' height='5' fill='%23ffb000'/%3E%3Crect x='9' y='9' width='5' height='5' fill='%23c05050'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,8 +36,8 @@
 
 <!-- ================= HERO ================= -->
 <section class="hero">
-  <canvas id="hero-art" aria-label="Diorama voxel: trincheira com soldados, tanque com gaiola e campo de girassóis"></canvas>
-  <canvas id="embers" aria-hidden="true"></canvas>
+  <img id="hero-art" src="assets/img/hero.webp" width="1800" height="1520" alt="Diorama voxel: trincheira com soldados, tanque com gaiola anti-drone e campo de girassóis" fetchpriority="high" decoding="async">
+  <div class="embers" aria-hidden="true"><i style="--x:8%;--d:9s;--w:-1s;--s:3px"></i><i style="--x:17%;--d:12s;--w:-6s;--s:2px"></i><i style="--x:26%;--d:8s;--w:-3s;--s:2px"></i><i style="--x:34%;--d:11s;--w:-8s;--s:3px"></i><i style="--x:43%;--d:10s;--w:-2s;--s:2px"></i><i style="--x:51%;--d:13s;--w:-9s;--s:2px"></i><i style="--x:58%;--d:9s;--w:-5s;--s:3px"></i><i style="--x:64%;--d:12s;--w:-1s;--s:2px"></i><i style="--x:71%;--d:8s;--w:-7s;--s:2px"></i><i style="--x:77%;--d:11s;--w:-4s;--s:3px"></i><i style="--x:83%;--d:10s;--w:-10s;--s:2px"></i><i style="--x:89%;--d:13s;--w:-3s;--s:2px"></i><i style="--x:94%;--d:9s;--w:-6s;--s:3px"></i><i style="--x:99%;--d:12s;--w:-2s;--s:2px"></i></div>
   <div class="hero-copy">
     <p class="kicker">// documento de brainstorm v0.1 · 08 out 2026</p>
     <h1 class="glitch" data-text="DARKRIOT">DARKRIOT</h1>
@@ -200,7 +200,10 @@
       <h3 class="card-title">Oblast de Vorsk — mapa tático (gerado)</h3>
       <p>4 km × 2,5 km mostrados · grade de 500 m. Estepe com girassóis e trigo, cinturões de árvores, rio Vorskla com duas pontes, vilas, a cidade industrial de Vorsk e a mina de sal Krystal (túneis). Setores A–E ao longo da linha de frente.</p>
     </div>
-    <canvas id="map" aria-label="Mapa tático procedural do Oblast de Vorsk com linha de frente e setores"></canvas>
+    <picture>
+      <source media="(max-width: 700px)" srcset="assets/img/map-narrow.webp" width="1260" height="789">
+      <img id="map" src="assets/img/map-wide.webp" width="2300" height="1438" loading="lazy" decoding="async" alt="Mapa tático do Oblast de Vorsk: campos, rio, vilas, a cidade de Vorsk, a mina de sal e a linha de frente com os setores A a E">
+    </picture>
     <ul class="legend">
       <li><i style="background:#c9a925"></i>Girassol</li><li><i style="background:#bfae6a"></i>Trigo</li><li><i style="background:#6b5236"></i>Arado</li>
       <li><i style="background:#2f4a25"></i>Floresta / cinturão</li><li><i style="background:#3d6a8a"></i>Rio</li><li><i style="background:#9d9a93"></i>Cidade</li>
@@ -214,20 +217,20 @@
   <div class="sec-head">
     <p class="sec-num">04 // concept art</p>
     <h2>Concept arts voxel</h2>
-    <p class="sec-sub">Renderizadas ao vivo por um mini motor voxel isométrico escrito para este site — cada bloco aqui pode virar referência direta para você modelar no Blockbench. Os comentários embaixo são as notas de modelagem.</p>
+    <p class="sec-sub">Geradas por código, com um mini motor voxel isométrico em JavaScript escrito para o projeto (<code>assets/js/voxel.js</code>) — cada bloco aqui pode virar referência direta para você modelar no Blockbench. Os comentários embaixo são as notas de modelagem.</p>
   </div>
   <div class="art-grid">
-    <figure class="art"><canvas data-art="coalizao" aria-label="Soldados da Coalizão em voxel"></canvas>
+    <figure class="art"><img src="assets/img/art-coalizao.webp" width="1200" height="800" loading="lazy" decoding="async" alt="Soldados da Coalizão em voxel">
       <figcaption><b>Soldado da Coalizão</b> Camuflagem de manchas (5 tons), fita amarela + azul sempre visível de longe — é o IFF do jogo. Mochila leve, fuzil AR com coronha tan, capacete com capa.</figcaption></figure>
-    <figure class="art"><canvas data-art="legiao" aria-label="Soldados da Legião em voxel"></canvas>
+    <figure class="art"><img src="assets/img/art-legiao.webp" width="1200" height="800" loading="lazy" decoding="async" alt="Soldados da Legião em voxel">
       <figcaption><b>Soldado da Legião</b> Camuflagem digital (pixel 1:1), balaclava, fita branca + vermelha. Colete mais volumoso, fuzil AK com carregador cor ameixa. Silhueta mais “quadrada” que a da Coalizão.</figcaption></figure>
-    <figure class="art"><canvas data-art="tank" aria-label="Tanque voxel com gaiola anti-drone"></canvas>
+    <figure class="art"><img src="assets/img/art-tank.webp" width="1200" height="800" loading="lazy" decoding="async" alt="Tanque voxel com gaiola anti-drone">
       <figcaption><b>Tanque “Urso T-7B”</b> Blocos de blindagem reativa, tora de desatolamento atrás, tambores extras. A gaiola anti-drone é um modelo separado, destrutível por partes.</figcaption></figure>
-    <figure class="art"><canvas data-art="trench" aria-label="Diorama de trincheira no campo de girassóis"></canvas>
+    <figure class="art"><img src="assets/img/art-trench.webp" width="1200" height="800" loading="lazy" decoding="async" alt="Diorama de trincheira no campo de girassóis">
       <figcaption><b>Trincheira na estepe</b> Zigue-zague (contra fogo de enfiada), revestimento de tábuas, sacos de areia na borda, arame farpado à frente, girassóis ao fundo, cratera recente.</figcaption></figure>
-    <figure class="art"><canvas data-art="village" aria-label="Vila em ruínas com IFV"></canvas>
+    <figure class="art"><img src="assets/img/art-village.webp" width="1200" height="800" loading="lazy" decoding="async" alt="Vila em ruínas com IFV">
       <figcaption><b>Vila em ruínas</b> Casa branca com detalhes azuis e telhado de metal. Tudo modular, com paredes de 1 bloco — destruição e reconstrução no mesmo sistema. IFV “Lince” passando.</figcaption></figure>
-    <figure class="art"><canvas data-art="fpv" aria-label="Drone FPV kamikaze voxel"></canvas>
+    <figure class="art"><img src="assets/img/art-fpv.webp" width="1200" height="800" loading="lazy" decoding="async" alt="Drone FPV kamikaze voxel">
       <figcaption><b>Drone FPV kamikaze</b> Frame em X, 4 motores, câmera frontal, bateria com fita, ogiva amarrada por baixo. Modelado a 32 px/m (o dobro dos personagens), porque é pequeno e aparece de perto.</figcaption></figure>
   </div>
 
@@ -275,20 +278,20 @@
   <div class="sec-head">
     <p class="sec-num">07 // como ficaria</p>
     <h2>GIFs de gameplay</h2>
-    <p class="sec-sub">Loops animados ao vivo mostrando cada mecânica em ação. Cada um também está disponível como <code>.gif</code> de verdade para baixar e mandar no Discord ou usar em devlog.</p>
+    <p class="sec-sub">Loops gerados a partir do código das animações (<code>assets/js/anims.js</code>), mostrando cada mecânica em ação. Cada um também está disponível como <code>.gif</code> para baixar e mandar no Discord ou usar em devlog.</p>
   </div>
   <div class="gif-grid">
-    <figure class="gif"><canvas data-anim="destroy" aria-label="Animação: RPG destrói parede de tijolos bloco a bloco"></canvas>
+    <figure class="gif"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/img/anim-destroy-still.webp"><img src="assets/img/anim-destroy.webp" width="480" height="300" loading="lazy" decoding="async" alt="Animação: RPG destrói parede de tijolos bloco a bloco"></picture>
       <figcaption><b>Destruição por material</b><span>Um RPG abre um buraco numa parede de tijolo: cada bloco vira detrito com física. Tijolo tem 40 de HP, concreto 80.</span><a href="assets/gifs/destroy.gif" download>baixar .gif</a></figcaption></figure>
-    <figure class="gif"><canvas data-anim="dig" aria-label="Animação: soldado cava trincheira e terra vira sacos de areia"></canvas>
+    <figure class="gif"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/img/anim-dig-still.webp"><img src="assets/img/anim-dig.webp" width="480" height="300" loading="lazy" decoding="async" alt="Animação: soldado cava trincheira e terra vira sacos de areia"></picture>
       <figcaption><b>Pá de sapador</b><span>Cavar transforma terra em sacos de areia. A trincheira cresce em tempo real e a parede ganha revestimento.</span><a href="assets/gifs/dig.gif" download>baixar .gif</a></figcaption></figure>
-    <figure class="gif"><canvas data-anim="fpv" aria-label="Animação: visão do óculos de um drone FPV mergulhando num tanque"></canvas>
+    <figure class="gif"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/img/anim-fpv-still.webp"><img src="assets/img/anim-fpv.webp" width="480" height="300" loading="lazy" decoding="async" alt="Animação: visão do óculos de um drone FPV mergulhando num tanque"></picture>
       <figcaption><b>FPV vs guerra eletrônica</b><span>Visão do óculos: bateria, altitude, RSSI caindo perto do jammer, impacto e “sinal perdido”.</span><a href="assets/gifs/fpv.gif" download>baixar .gif</a></figcaption></figure>
-    <figure class="gif"><canvas data-anim="artillery" aria-label="Animação: observador corrige tiro de artilharia até destruir bunker"></canvas>
+    <figure class="gif"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/img/anim-artillery-still.webp"><img src="assets/img/anim-artillery.webp" width="480" height="300" loading="lazy" decoding="async" alt="Animação: observador corrige tiro de artilharia até destruir bunker"></picture>
       <figcaption><b>Observador + artilharia</b><span>O drone marca o alvo, o primeiro tiro cai curto, o observador corrige, o segundo destrói o bunker — e a cratera fica no terreno.</span><a href="assets/gifs/artillery.gif" download>baixar .gif</a></figcaption></figure>
-    <figure class="gif"><canvas data-anim="build" aria-label="Animação: bunker sendo construído bloco a bloco no modo Fortaleza"></canvas>
+    <figure class="gif"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/img/anim-build-still.webp"><img src="assets/img/anim-build.webp" width="480" height="300" loading="lazy" decoding="async" alt="Animação: bunker sendo construído bloco a bloco no modo Fortaleza"></picture>
       <figcaption><b>Modo Fortaleza</b><span>Fase de construção: blocos encaixam no blueprint do bunker enquanto o relógio corre até o ataque.</span><a href="assets/gifs/build.gif" download>baixar .gif</a></figcaption></figure>
-    <figure class="gif"><canvas data-anim="nvg" aria-label="Animação: visão noturna com lasers infravermelhos e sinalizador"></canvas>
+    <figure class="gif"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/img/anim-nvg-still.webp"><img src="assets/img/anim-nvg.webp" width="480" height="300" loading="lazy" decoding="async" alt="Animação: visão noturna com lasers infravermelhos e sinalizador"></picture>
       <figcaption><b>Blackout (noite)</b><span>Visão noturna, lasers IR, inimigos avançando no escuro — até o sinalizador estourar o ganho do tubo.</span><a href="assets/gifs/nvg.gif" download>baixar .gif</a></figcaption></figure>
   </div>
 </section>
@@ -377,13 +380,9 @@
 <footer class="foot">
   <div class="hazard" aria-hidden="true"></div>
   <p><b>DARKRIOT</b> · brainstorm vivo · facções, lugares e veículos são fictícios.</p>
-  <p class="muted small">Concept arts e GIFs gerados por código (canvas) neste repositório · hospedado no GitHub Pages.</p>
+  <p class="muted small">Concept arts, mapa e GIFs gerados por código neste repositório · hospedado no GitHub Pages.</p>
 </footer>
 
-<script src="assets/js/voxel.js"></script>
-<script src="assets/js/models.js"></script>
-<script src="assets/js/art.js"></script>
-<script src="assets/js/anims.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>DARKRIOT — exportar artes</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+<style>body { margin: 0; background: #000; } canvas { display: block; }</style>
+</head>
+<body>
+<script>window.DR = { MAX_DPR: 4 };</script>
+<script src="../../assets/js/voxel.js"></script>
+<script src="../../assets/js/models.js"></script>
+<script src="../../assets/js/art.js"></script>
+<script src="../../assets/js/anims.js"></script>
+<script>
+  // Funções chamadas pelo export.js. Todas devolvem PNG em data URL.
+  function cssCanvas(w, h) {
+    const c = document.createElement('canvas');
+    c.style.width = w + 'px'; c.style.height = h + 'px';
+    document.body.appendChild(c);
+    return c;
+  }
+  function take(c) { const d = c.toDataURL('image/png'); c.remove(); return d; }
+  // Resolução final = tamanho CSS × deviceScaleFactor da página.
+  window.exportArt = (id, w, h, opts) => { const c = cssCanvas(w, h); DR.drawArt(c, id, opts); return take(c); };
+  window.exportMap = (w, h) => { const c = cssCanvas(w, h); DR.drawMap(c); return take(c); };
+  // Quadro t (segundos) de uma animação, em pixels exatos w × h.
+  window.exportFrame = (id, t, w, h) => {
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    DR.ANIMS[id].frame(c.getContext('2d'), w, h, t);
+    return c.toDataURL('image/png');
+  };
+  window.animInfo = () => Object.keys(DR.ANIMS).map((id) => ({ id, T: DR.ANIMS[id].T, poster: DR.ANIMS[id].poster != null ? DR.ANIMS[id].poster : DR.ANIMS[id].T * 0.4 }));
+</script>
+</body>
+</html>

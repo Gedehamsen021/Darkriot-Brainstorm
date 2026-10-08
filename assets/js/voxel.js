@@ -145,7 +145,7 @@
 
   // Prepara canvas com DPR
   DR.setupCanvas = function (cv) {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, DR.MAX_DPR || 2);
     const W = cv.clientWidth || cv.width, H = cv.clientHeight || cv.height;
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
     const ctx = cv.getContext('2d');

@@ -1,4 +1,5 @@
-/* DARKRIOT — conteúdo do brainstorm (dados) + montagem da página. */
+/* DARKRIOT — conteúdo do brainstorm (dados) + montagem da página.
+   As artes e animações são imagens pré-renderizadas (tools/render), para a página rolar leve. */
 (function () {
   const DR = window.DR;
   const $ = (s, r) => (r || document).querySelector(s);
@@ -392,46 +393,35 @@ Liste por ordem de gravidade com arquivo:linha e proponha a correção. Não alt
     RISKS.forEach(([a, b]) => rl.appendChild(el('li', '', `<b>${a}</b><span>${b}</span>`)));
   }
 
-  /* ======================= CANVAS ======================= */
+  /* ======================= NAVEGAÇÃO ======================= */
 
-  function drawArts() {
-    $$('canvas[data-art]').forEach((c) => DR.drawArt(c, c.dataset.art));
-    const hero = $('#hero-art');
-    if (hero) DR.drawArt(hero, 'hero', { pad: 8 });
-    const map = $('#map');
-    if (map) DR.drawMap(map);
-  }
-
-  function embers() {
-    const cv = $('#embers');
-    if (!cv || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const P = Array.from({ length: 46 }, (_, i) => ({ x: Math.random(), y: Math.random(), s: 1 + Math.random() * 2.5, v: 0.02 + Math.random() * 0.05, p: Math.random() * 6 }));
-    DR.loop(cv, (ctx, W, H, t) => {
-      ctx.clearRect(0, 0, W, H);
-      for (const e of P) {
-        const y = ((e.y - t * e.v) % 1 + 1) % 1, x = e.x + Math.sin(t * 0.6 + e.p) * 0.02;
-        ctx.fillStyle = `rgba(255,${150 + (e.p * 15 | 0)},60,${0.25 + 0.5 * Math.abs(Math.sin(t + e.p))})`;
-        ctx.fillRect(x * W, y * H, e.s, e.s);
-      }
-    });
-  }
-
+  // Destaca a seção atual no menu. Só rola o próprio menu (na horizontal) e só quando o link
+  // está fora da área visível dele — nunca a página, para não brigar com a rolagem de quem lê.
   function nav() {
+    const bar = $('.nav');
     const links = $$('.nav a[href^="#"]');
     const map = new Map(links.map((a) => [a.getAttribute('href').slice(1), a]));
+    const show = (a) => {
+      const left = a.offsetLeft - bar.offsetLeft, right = left + a.offsetWidth;
+      if (left < bar.scrollLeft || right > bar.scrollLeft + bar.clientWidth) {
+        bar.scrollTo({ left: left - (bar.clientWidth - a.offsetWidth) / 2, behavior: 'smooth' });
+      }
+    };
     const obs = new IntersectionObserver((ents) => {
       ents.forEach((e) => {
-        if (e.isIntersecting) { links.forEach((a) => a.classList.remove('on')); const a = map.get(e.target.id); if (a) { a.classList.add('on'); a.scrollIntoView({ block: 'nearest', inline: 'center' }); } }
+        if (!e.isIntersecting) return;
+        const a = map.get(e.target.id); // o hero não tem link: limpa o destaque
+        if (a && a.classList.contains('on')) return;
+        links.forEach((l) => l.classList.remove('on'));
+        if (a) { a.classList.add('on'); show(a); } else if (bar.scrollLeft) bar.scrollTo({ left: 0, behavior: 'smooth' });
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
+    obs.observe($('.hero'));
     map.forEach((_, id) => { const s = document.getElementById(id); if (s) obs.observe(s); });
   }
 
   document.addEventListener('DOMContentLoaded', () => {
     renderModes(); renderMechs(); renderGantt(); renderAssets(); renderPrompts(); renderDecisions();
-    const go = () => { drawArts(); $$('canvas[data-anim]').forEach((c) => DR.playAnim(c, c.dataset.anim)); embers(); nav(); };
-    (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(go);
-    let rt;
-    window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(drawArts, 200); });
+    nav();
   });
 })();

@@ -149,9 +149,11 @@
     const v = a._v || (a._v = a.build());
     const o = Object.assign(DR.fit(v, W, H, (opts && opts.pad) != null ? opts.pad : 18), { jitter: 0.07, edge: true }, opts || {});
     DR.render(ctx, v, o);
-    // grão de filme
-    ctx.fillStyle = 'rgba(0,0,0,0.05)';
-    for (let i = 0; i < 400; i++) ctx.fillRect(Math.random() * W, Math.random() * H, 1, 1);
+    // grão de filme (desligado em artes com fundo transparente)
+    if (a.sky) {
+      ctx.fillStyle = 'rgba(0,0,0,0.05)';
+      for (let i = 0; i < 400; i++) ctx.fillRect(Math.random() * W, Math.random() * H, 1, 1);
+    }
     return v;
   };
 })();

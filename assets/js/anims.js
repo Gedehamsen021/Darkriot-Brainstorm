@@ -248,7 +248,7 @@
           // interferência EW
           const noise = 0.03 + p * p * 0.4 + (Math.sin(t * 7) > 0.9 ? 0.25 : 0);
           for (let i = 0; i < LW * LH * noise * 0.08; i++) {
-            const g = Math.random() * 255 | 0; lx.fillStyle = `rgb(${g},${g},${g})`;
+            const g = (Math.random() * 4 | 0) * 85; lx.fillStyle = `rgb(${g},${g},${g})`;
             lx.fillRect(Math.random() * LW | 0, Math.random() * LH | 0, 1 + (Math.random() * 3 | 0), 1);
           }
           if (Math.random() < 0.25 + p * 0.4) {
@@ -272,8 +272,9 @@
           const k = t - hit;
           if (k < 0.12) { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, Ht); }
           else {
-            for (let y = 0; y < LH; y++) for (let x = 0; x < LW; x += 2) {
-              const g = Math.random() * 200 | 0; lx.fillStyle = `rgb(${g},${g},${g})`; lx.fillRect(x, y, 2, 1);
+            // estática em blocos 4×2 e poucos tons: lê como "sem sinal" e comprime bem no GIF/WebP
+            for (let y = 0; y < LH; y += 2) for (let x = 0; x < LW; x += 4) {
+              const g = (Math.random() * 5 | 0) * 48; lx.fillStyle = `rgb(${g},${g},${g})`; lx.fillRect(x, y, 4, 2);
             }
             blit(ctx, lc, W, Ht);
             ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(W / 2 - 120, Ht / 2 - 30, 240, 60);
